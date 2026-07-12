@@ -54,7 +54,7 @@ export function SplitTextReveal({ children, delay = 0, className = '', as: Compo
     },
   }
 
-  const MotionComponent = motion(Component as any)
+  const MotionComponent = motion.create(Component as any)
 
   return (
     <MotionComponent
