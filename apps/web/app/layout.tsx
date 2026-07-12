@@ -86,18 +86,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <QueryProvider>
             <TooltipProvider>
               {children}
-              <Toaster
-                theme="system"
-                position="bottom-right"
-              toastOptions={{
-                style: {
-                  background: 'var(--color-surface)',
-                  border: '1px solid var(--color-divider)',
-                  color: 'var(--color-text-primary)',
-                },
-              }}
-            />
-          </TooltipProvider>
+              <Toaster position="bottom-right" />
+            </TooltipProvider>
         </QueryProvider>
         </SmoothScrollProvider>
       </body>
