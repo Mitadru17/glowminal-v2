@@ -69,44 +69,44 @@ export function HeroContent() {
   return (
     <motion.div 
       style={{ y: heroY, opacity: heroOpacity, scale: heroScale, willChange: "transform, opacity" }}
-      className="relative z-10 flex w-full max-w-7xl flex-col items-center px-4 md:px-6 text-center mt-[10vh] md:mt-0"
+      className="relative z-10 flex w-full flex-col items-center px-6 md:px-6 text-center mt-[12vh] md:mt-0"
     >
       <motion.div 
         initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8, ease: EASING.expensive }}
-        className="mb-6 md:mb-8 inline-flex items-center gap-2 rounded-full glass-premium px-3 py-1 md:px-4 md:py-1.5 text-[10px] md:text-xs font-mono font-medium uppercase tracking-widest text-text-secondary shadow-sm backdrop-blur-3xl bg-surface-elevated/40"
+        className="mb-8 md:mb-8 inline-flex items-center gap-2 rounded-full glass-premium px-4 py-1.5 md:px-4 md:py-1.5 text-[10px] md:text-xs font-mono font-medium uppercase tracking-widest text-text-secondary shadow-sm backdrop-blur-3xl bg-surface-elevated/40"
       >
-        <span className="h-2 w-2 rounded-full bg-accent-lime shadow-[0_0_8px_rgba(217,249,157,0.8)]"></span>
+        <span className="h-1.5 w-1.5 rounded-full bg-accent-lime shadow-[0_0_8px_rgba(217,249,157,0.8)]"></span>
         Glowminal 1.0
       </motion.div>
 
-      <h1 className="max-w-5xl text-[14vw] sm:text-[12vw] leading-[0.95] md:leading-[0.9] tracking-tighter text-text-primary md:text-[9rem] font-light text-shadow-sm flex flex-col items-center">
+      <h1 className="w-full text-5xl xs:text-[11vw] sm:text-[10vw] leading-[1.05] md:leading-[0.9] tracking-tighter text-text-primary md:text-[9rem] font-light flex flex-col items-center">
         <span>Skin Intelligence,</span>
         <motion.span 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4, duration: 1, ease: EASING.expensive }}
-          className="inline-block font-editorial italic text-primary pr-4"
+          className="inline-block font-editorial italic text-primary pr-2 md:pr-4"
         >
           elevated.
         </motion.span>
       </h1>
 
-      <SplitTextReveal delay={0.6} className="mt-6 md:mt-8 max-w-xs md:max-w-xl text-base md:text-xl text-text-secondary font-light leading-relaxed">
+      <SplitTextReveal delay={0.6} className="mt-8 md:mt-8 max-w-[280px] xs:max-w-xs md:max-w-xl text-[15px] md:text-xl text-text-secondary font-light leading-relaxed">
         Stop guessing. Start knowing. Glowminal uses computer vision to analyze your skin's microscopic reality.
       </SplitTextReveal>
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1, duration: 0.8, ease: EASING.expensive }}
-        className="mt-8 md:mt-12 w-full px-4 md:px-0 md:w-auto"
+        className="mt-10 md:mt-12 w-full max-w-[280px] xs:max-w-xs md:max-w-none md:w-auto"
       >
         <MagneticButton 
           onClick={() => {
             toast('Coming Soon', {
               description: 'We are currently in private beta. You can join the waitlist below.',
             })
-            document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })
+            document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
           }} 
-          className="h-14 md:h-16 w-full md:w-auto px-8 md:px-12 text-base md:text-lg shadow-[0_8px_30px_rgb(0,0,0,0.08)]"
+          className="h-14 md:h-16 w-full md:w-auto px-8 md:px-12 text-[15px] md:text-lg shadow-[0_8px_30px_rgb(0,0,0,0.08)]"
         >
           Begin Free Scan <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
         </MagneticButton>

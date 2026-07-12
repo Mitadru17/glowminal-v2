@@ -387,7 +387,7 @@ export function FeatureNarrative() {
               key={chapter.index}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: "200px" }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               style={{
                 '--card-muted': useTransform(smoothProgress, [0, 0.7, 0.85, 1], ["rgba(28,25,23,0.6)", "rgba(28,25,23,0.6)", "rgba(255,255,255,0.6)", "rgba(255,255,255,0.6)"]),
@@ -405,7 +405,7 @@ export function FeatureNarrative() {
                   src={chapter.imageSrc} 
                   alt={chapter.imageAlt}
                   fill
-                  priority={i < 2}
+                  priority={true}
                   sizes="100vw"
                   className="object-cover"
                   style={{ filter: 'saturate(85%) contrast(110%) brightness(95%) sepia(10%) hue-rotate(-5deg)' }}

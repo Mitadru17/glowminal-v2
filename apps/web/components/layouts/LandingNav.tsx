@@ -18,64 +18,64 @@ const NAV_LINKS = [
 
 const THEMES: Record<NavTheme, any> = {
   hero: {
-    background: "rgba(250, 250, 249, 0.4)",
-    backdropFilter: "blur(16px) saturate(1.2)",
-    borderColor: "rgba(255, 255, 255, 0.4)",
-    boxShadow: "0 8px 32px rgba(28, 25, 23, 0.03), inset 0 1px 2px rgba(255, 255, 255, 0.6)",
-    color: "#1C1917", // Warm Charcoal
-    logoBg: "var(--color-primary)",
+    background: "rgba(2, 44, 34, 0.25)", // deep emerald translucent
+    backdropFilter: "blur(24px) saturate(1.2)",
+    borderColor: "rgba(255, 255, 255, 0.15)",
+    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.1)",
+    color: "#FFFFFF",
+    logoBg: "rgba(255, 255, 255, 0.15)",
     logoIcon: "#FFFFFF",
-    ctaBg: "rgba(255, 255, 255, 0.9)",
-    ctaText: "#1C1917",
-    ctaHover: "rgba(255, 255, 255, 1)",
-  },
-  editorial: {
-    background: "rgba(255, 255, 255, 0.7)",
-    backdropFilter: "blur(24px) saturate(1.4)",
-    borderColor: "rgba(120, 113, 108, 0.15)",
-    boxShadow: "0 12px 40px rgba(0, 0, 0, 0.04), inset 0 1px 0px rgba(255, 255, 255, 0.8)",
-    color: "#2E3A23", // Deep Olive
-    logoBg: "#2E3A23",
-    logoIcon: "#FFFFFF",
-    ctaBg: "#F5F5F4", // Stone White
-    ctaText: "#2E3A23",
+    ctaBg: "rgba(255, 255, 255, 0.95)",
+    ctaText: "#022C22",
     ctaHover: "#FFFFFF",
   },
-  scientific: {
-    background: "rgba(230, 235, 231, 0.55)",
-    backdropFilter: "blur(12px) saturate(1)",
-    borderColor: "rgba(28, 34, 31, 0.08)",
-    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.02)",
-    color: "#1C221F", // Deep Graphite
-    logoBg: "#1C221F",
+  editorial: {
+    background: "rgba(255, 255, 255, 0.65)", // soft frosted white
+    backdropFilter: "blur(24px) saturate(1.4)",
+    borderColor: "rgba(0, 0, 0, 0.05)",
+    boxShadow: "0 12px 40px rgba(0, 0, 0, 0.04), inset 0 1px 0px rgba(255, 255, 255, 0.8)",
+    color: "#1C1917", // warm charcoal
+    logoBg: "#1C1917",
     logoIcon: "#FFFFFF",
-    ctaBg: "rgba(217, 228, 222, 0.9)", // Muted Sage
-    ctaText: "#1C221F",
-    ctaHover: "rgba(230, 235, 231, 1)",
+    ctaBg: "#1C1917",
+    ctaText: "#FFFFFF",
+    ctaHover: "#2E3A23",
+  },
+  scientific: {
+    background: "rgba(255, 255, 255, 0.75)", // soft frosted white
+    backdropFilter: "blur(24px) saturate(1.2)",
+    borderColor: "rgba(0, 0, 0, 0.05)",
+    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.02)",
+    color: "#1C1917",
+    logoBg: "#1C1917",
+    logoIcon: "#FFFFFF",
+    ctaBg: "#1C1917",
+    ctaText: "#FFFFFF",
+    ctaHover: "#2E3A23",
   },
   botanical: {
-    background: "rgba(4, 120, 87, 0.15)",
+    background: "rgba(4, 120, 87, 0.4)", // mid emerald translucent
     backdropFilter: "blur(32px) saturate(1.5)",
-    borderColor: "rgba(167, 243, 208, 0.2)",
+    borderColor: "rgba(255, 255, 255, 0.15)",
     boxShadow: "0 16px 48px rgba(2, 44, 34, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.1)",
-    color: "#F2F5F3", // Warm White
-    logoBg: "rgba(255, 255, 255, 0.95)",
-    logoIcon: "var(--color-primary-dark)",
-    ctaBg: "rgba(4, 120, 87, 0.8)", // Emerald Glass
-    ctaText: "#FFFFFF",
-    ctaHover: "rgba(4, 120, 87, 0.95)",
+    color: "#FFFFFF",
+    logoBg: "rgba(255, 255, 255, 0.2)",
+    logoIcon: "#FFFFFF",
+    ctaBg: "rgba(255, 255, 255, 0.95)",
+    ctaText: "#047857",
+    ctaHover: "#FFFFFF",
   },
   footer: {
-    background: "rgba(2, 44, 34, 0.7)",
+    background: "rgba(2, 44, 34, 0.6)", // deep emerald glass
     backdropFilter: "blur(48px) saturate(1.2)",
-    borderColor: "rgba(167, 243, 208, 0.12)",
+    borderColor: "rgba(255, 255, 255, 0.1)",
     boxShadow: "0 20px 60px rgba(0, 0, 0, 0.2), inset 0 1px 0px rgba(255, 255, 255, 0.05)",
-    color: "rgba(255, 255, 255, 0.9)", // Very Soft White
-    logoBg: "rgba(167, 243, 208, 0.15)",
-    logoIcon: "#A7F3D0",
+    color: "#FFFFFF",
+    logoBg: "rgba(255, 255, 255, 0.15)",
+    logoIcon: "#FFFFFF",
     ctaBg: "var(--color-primary)",
     ctaText: "#FFFFFF",
-    ctaHover: "rgba(16, 185, 129, 1)", // Lighter emerald (increased luminosity)
+    ctaHover: "rgba(16, 185, 129, 1)",
   }
 }
 
@@ -140,11 +140,11 @@ export function LandingNav() {
         <motion.nav
           initial={false}
           animate={{
-            backgroundColor: mobileMenuOpen ? "rgba(250, 250, 249, 0.95)" : activeTheme.background,
+            backgroundColor: mobileMenuOpen ? (activeTheme.color === "#FFFFFF" ? "rgba(2, 44, 34, 0.95)" : "rgba(255, 255, 255, 0.95)") : activeTheme.background,
             backdropFilter: activeTheme.backdropFilter,
             borderColor: mobileMenuOpen ? "rgba(0, 0, 0, 0)" : activeTheme.borderColor,
             boxShadow: activeTheme.boxShadow,
-            color: mobileMenuOpen ? "#1C1917" : activeTheme.color
+            color: activeTheme.color
           }}
           transition={{ duration: DURATION.scene, ease: EASING.expensive }}
           className="relative z-50 flex items-center justify-between mx-auto w-full max-w-[900px] py-3 px-6 rounded-full border border-solid"
@@ -226,7 +226,7 @@ export function LandingNav() {
                 transition={{ duration: 0.8, ease: EASING.expensive }}
                 className="relative tracking-wide font-semibold"
               >
-                Start Free Scan
+                 Start Free Scan
               </motion.span>
             </button>
           </div>
@@ -249,10 +249,14 @@ export function LandingNav() {
         {mobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, y: -20, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
+            animate={{ 
+              opacity: 1, y: 0, scale: 1,
+              backgroundColor: activeTheme.color === "#FFFFFF" ? "rgba(2, 44, 34, 0.98)" : "rgba(250, 250, 249, 0.98)",
+              color: activeTheme.color === "#FFFFFF" ? "#FFFFFF" : "#1C1917"
+            }}
             exit={{ opacity: 0, y: -20, scale: 0.98 }}
             transition={{ duration: 0.5, ease: EASING.expensive }}
-            className="fixed inset-0 z-40 bg-background/95 backdrop-blur-3xl flex flex-col justify-center px-8 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
+            className="fixed inset-0 z-40 backdrop-blur-3xl flex flex-col justify-center px-8 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
           >
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(4,120,87,0.05),transparent_70%)] pointer-events-none" />
             
@@ -266,7 +270,7 @@ export function LandingNav() {
                 >
                   <Link
                     href={link.href}
-                    className="flex items-center gap-4 text-text-primary hover:text-primary transition-colors py-2 active:scale-95 origin-left touch-manipulation"
+                    className="flex items-center gap-4 text-current hover:opacity-70 transition-opacity py-2 active:scale-95 origin-left touch-manipulation"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {link.label}
@@ -274,7 +278,7 @@ export function LandingNav() {
                 </motion.div>
               ))}
               
-              <div className="h-px w-12 bg-divider my-4" />
+              <div className="h-px w-12 bg-current opacity-20 my-4" />
               
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
@@ -287,7 +291,7 @@ export function LandingNav() {
                     toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
                     document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })
                   }}
-                  className="text-xl font-medium text-text-secondary hover:text-text-primary transition-colors text-left py-2 active:scale-95 origin-left touch-manipulation"
+                  className="text-xl font-medium text-current opacity-70 hover:opacity-100 transition-opacity text-left py-2 active:scale-95 origin-left touch-manipulation"
                 >
                   Sign In
                 </button>
