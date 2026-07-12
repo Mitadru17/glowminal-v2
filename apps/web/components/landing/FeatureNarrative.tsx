@@ -353,7 +353,7 @@ export function FeatureNarrative() {
 
       {/* MOBILE / PORTRAIT: Premium Stacked Editorial Cards */}
       <motion.div 
-        className="block lg:hidden w-full px-4 sm:px-6 py-24 space-y-8 transition-colors duration-1000"
+        className="block lg:hidden w-full px-4 sm:px-6 py-24 space-y-8"
         style={{
           backgroundColor: useTransform(
             smoothProgress,
@@ -370,7 +370,6 @@ export function FeatureNarrative() {
 
         {CHAPTERS.map((chapter, i) => {
           const isDark = i === 3;
-          const isEven = i % 2 === 0;
 
           return (
             <motion.div 
@@ -378,7 +377,7 @@ export function FeatureNarrative() {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} // EASING.expensive
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className={`flex flex-col w-full rounded-[2rem] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border ${
                 isDark 
                   ? "bg-[#022C22] border-white/10 text-white" 
@@ -386,8 +385,8 @@ export function FeatureNarrative() {
               }`}
             >
               
-              {/* Image Section (Alternates Top/Bottom) */}
-              <div className={`relative w-full aspect-[4/3] sm:aspect-[16/10] bg-black/5 ${isEven ? 'order-1' : 'order-2'}`}>
+              {/* Image Section (Always Top) */}
+              <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] bg-black/5">
                 <Image 
                   src={chapter.imageSrc} 
                   alt={chapter.imageAlt}
@@ -400,8 +399,8 @@ export function FeatureNarrative() {
                 <div className="absolute inset-0 ring-1 ring-inset ring-black/5 pointer-events-none" />
               </div>
 
-              {/* Text Section */}
-              <div className={`flex flex-col p-8 sm:p-10 ${isEven ? 'order-2' : 'order-1'}`}>
+              {/* Text Section (Always Bottom) */}
+              <div className="flex flex-col p-8 sm:p-10">
                 <div 
                   className={`font-mono text-[10px] uppercase tracking-mono flex items-center gap-3 mb-6 ${
                     isDark ? "text-white/60" : "text-text-secondary"
