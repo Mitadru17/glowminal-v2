@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Newsreader } from 'next/font/google'
+import { Inter, Newsreader, Jost } from 'next/font/google'
 import { Toaster } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { QueryProvider } from '@/components/providers/QueryProvider'
@@ -16,6 +16,13 @@ const newsreader = Newsreader({
   variable: '--font-editorial',
   style: ['normal', 'italic'],
   display: 'swap',
+})
+
+const jost = Jost({
+  subsets: ['latin'],
+  variable: '--font-jost',
+  display: 'swap',
+  weight: ['300', '400', '500'],
 })
 
 export const metadata: Metadata = {
@@ -58,7 +65,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#3CA956',
+  themeColor: '#047857',
 }
 
 interface RootLayoutProps {
@@ -72,7 +79,7 @@ interface RootLayoutProps {
  */
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${inter.variable} ${newsreader.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${newsreader.variable} ${jost.variable}`} suppressHydrationWarning>
       <body className="overflow-x-hidden antialiased">
         <QueryProvider>
           <TooltipProvider>

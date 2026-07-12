@@ -3,7 +3,8 @@
 import { useActionState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Sparkles, AlertCircle } from 'lucide-react'
+import { AlertCircle } from 'lucide-react'
+import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { SubmitButton } from '@/components/shared/SubmitButton'
@@ -67,7 +68,7 @@ export default function ResetPasswordPage() {
           href="/"
           className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary shadow-sm transition-transform hover:scale-105"
         >
-          <Sparkles className="h-6 w-6 text-white" />
+          <GlowminalLogo variant="symbol" size={24} theme="light" />
         </Link>
         <h1 className="mt-6 text-2xl font-bold tracking-tight text-text-primary">
           Update Password

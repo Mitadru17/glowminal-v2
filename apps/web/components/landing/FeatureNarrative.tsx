@@ -1,8 +1,9 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from 'framer-motion'
 import { Activity, Sparkle, ScanFace, Droplets, ArrowRight } from 'lucide-react'
+import { useNavThemeStore } from '@/store/nav-theme'
 
 const CHAPTERS = [
   {
@@ -74,6 +75,19 @@ export function FeatureNarrative() {
     restDelta: 0.001
   })
 
+  const setNavTheme = useNavThemeStore(state => state.setTheme)
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (latest < 0.05) return // Let Hero handle it
+    if (latest < 0.33) {
+      setNavTheme('editorial')
+    } else if (latest < 0.8) {
+      setNavTheme('scientific')
+    } else if (latest <= 1) {
+      setNavTheme('botanical')
+    }
+  })
+
   // We have 4 chapters. Progress chunks: 
   // 0.0 - 0.25 : Chapter 1
   // 0.25 - 0.50 : Chapter 2
@@ -90,30 +104,32 @@ export function FeatureNarrative() {
           style={{
             backgroundColor: useTransform(
               smoothProgress,
-              [0, 0.33, 0.66, 1],
-              ["#FFFFFF", "#F2F5F3", "#F0F4F1", "#043026"]
+              [0, 0.33, 0.66, 0.85, 1],
+              ["#FAFAF9", "#F2F5F3", "#E8F0EA", "#184133", "#022C22"]
             )
           }}
         />
 
         {/* Global Grain */}
         <div 
-          className="absolute inset-0 opacity-[0.025] mix-blend-multiply pointer-events-none z-0"
+          className="absolute inset-0 opacity-[0.03] mix-blend-multiply pointer-events-none z-0"
           style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} 
         />
 
         {/* Dynamic Architectural Lighting */}
         <motion.div 
-          className="absolute inset-0 opacity-50 z-0 mix-blend-overlay pointer-events-none"
+          className="absolute inset-0 opacity-50 z-0 pointer-events-none"
           style={{
             background: useTransform(
               smoothProgress,
-              [0, 1],
+              [0, 0.66, 1],
               [
-                "radial-gradient(circle at 50% 0%, rgba(4,120,87,0.03), transparent 70%)",
-                "radial-gradient(circle at 50% 100%, rgba(4,120,87,0.15), transparent 70%)"
+                "radial-gradient(circle at 50% 0%, rgba(4,120,87,0.02), transparent 70%)",
+                "radial-gradient(circle at 50% 50%, rgba(4,120,87,0.05), transparent 70%)",
+                "radial-gradient(circle at 50% 100%, rgba(4,120,87,0.2), transparent 80%)"
               ]
-            )
+            ),
+            mixBlendMode: useTransform(smoothProgress, [0.66, 1], ["multiply", "screen"]) as any
           }}
         />
 
@@ -173,6 +189,8 @@ export function FeatureNarrative() {
                 const startTitle = start + 0.05
                 const startDesc = start + 0.10
                 const startCaps = start + 0.15
+                
+                const isDark = i === 3
 
                 return (
                   <motion.div
@@ -180,13 +198,15 @@ export function FeatureNarrative() {
                     className="absolute top-1/2 left-0 w-full -translate-y-1/2"
                     style={{
                       opacity: useTransform(smoothProgress, [start, peak, end], [0, 1, 0]),
-                      y: useTransform(smoothProgress, [start, peak, end], [40, 0, -40]),
-                      pointerEvents: i === 0 ? "auto" : "none" // Manage clicking (can dynamically update via state if needed)
+                      pointerEvents: i === 0 ? "auto" : "none" // Manage clicking
                     }}
                   >
                     <motion.div 
                       className="font-mono text-[10px] uppercase tracking-mono flex items-center gap-4 mb-8"
-                      style={{ color: useTransform(smoothProgress, [0.66, 1], ["var(--color-text-secondary)", "rgba(255,255,255,0.6)"]) }}
+                      style={{ 
+                        color: isDark ? "rgba(255,255,255,0.6)" : "var(--color-text-secondary)",
+                        y: useTransform(smoothProgress, [start, peak, end], [30, 0, -30])
+                      }}
                     >
                       <span className="opacity-60">{chapter.index}</span>
                       <span className="h-px w-12 bg-current opacity-20"></span>
@@ -199,7 +219,7 @@ export function FeatureNarrative() {
                     <motion.h2 
                       className="text-5xl sm:text-6xl lg:text-[5rem] font-light tracking-tight leading-[1] mb-8"
                       style={{ 
-                        color: useTransform(smoothProgress, [0.66, 1], ["var(--color-text-primary)", "#FFFFFF"]) as any,
+                        color: isDark ? "#FFFFFF" : "var(--color-text-primary)",
                         opacity: useTransform(smoothProgress, [startTitle, peak, end], [0, 1, 0]),
                         y: useTransform(smoothProgress, [startTitle, peak, end], [40, 0, -40])
                       }}
@@ -210,7 +230,7 @@ export function FeatureNarrative() {
                     <motion.p 
                       className="text-lg lg:text-xl font-light leading-relaxed max-w-md mb-12"
                       style={{ 
-                        color: useTransform(smoothProgress, [0.66, 1], ["var(--color-text-secondary)", "rgba(255,255,255,0.8)"]) as any,
+                        color: isDark ? "rgba(255,255,255,0.8)" : "var(--color-text-secondary)",
                         opacity: useTransform(smoothProgress, [startDesc, peak, end], [0, 1, 0]),
                         y: useTransform(smoothProgress, [startDesc, peak, end], [40, 0, -40])
                       }}
@@ -232,7 +252,7 @@ export function FeatureNarrative() {
                             <div className="w-1 h-1 rounded-full bg-primary/40" />
                             <motion.span 
                               className="text-sm font-light tracking-wide"
-                              style={{ color: useTransform(smoothProgress, [0.66, 1], ["var(--color-text-primary)", "rgba(255,255,255,0.9)"]) as any }}
+                              style={{ color: isDark ? "rgba(255,255,255,0.9)" : "var(--color-text-primary)" }}
                             >
                               {cap}
                             </motion.span>
@@ -244,13 +264,13 @@ export function FeatureNarrative() {
                         <div className="flex flex-col gap-1">
                           <motion.span 
                             className="font-mono text-[8px] uppercase tracking-mono opacity-50"
-                            style={{ color: useTransform(smoothProgress, [0.66, 1], ["var(--color-text-secondary)", "rgba(255,255,255,0.8)"]) as any }}
+                            style={{ color: isDark ? "rgba(255,255,255,0.8)" : "var(--color-text-secondary)" }}
                           >
                             Status
                           </motion.span>
                           <motion.span 
                             className="font-mono text-[10px] uppercase tracking-mono flex items-center gap-2"
-                            style={{ color: useTransform(smoothProgress, [0.66, 1], ["var(--color-text-primary)", "rgba(255,255,255,1)"]) as any }}
+                            style={{ color: isDark ? "rgba(255,255,255,1)" : "var(--color-text-primary)" }}
                           >
                             <span className="w-1.5 h-1.5 rounded-full bg-accent-lime animate-pulse" />
                             {chapter.status}
@@ -259,13 +279,13 @@ export function FeatureNarrative() {
                         <div className="flex flex-col gap-1">
                           <motion.span 
                             className="font-mono text-[8px] uppercase tracking-mono opacity-50"
-                            style={{ color: useTransform(smoothProgress, [0.66, 1], ["var(--color-text-secondary)", "rgba(255,255,255,0.8)"]) as any }}
+                            style={{ color: isDark ? "rgba(255,255,255,0.8)" : "var(--color-text-secondary)" }}
                           >
                             Read Time
                           </motion.span>
                           <motion.span 
                             className="font-mono text-[10px] uppercase tracking-mono"
-                            style={{ color: useTransform(smoothProgress, [0.66, 1], ["var(--color-text-primary)", "rgba(255,255,255,1)"]) as any }}
+                            style={{ color: isDark ? "rgba(255,255,255,1)" : "var(--color-text-primary)" }}
                           >
                             {chapter.readingTime}
                           </motion.span>

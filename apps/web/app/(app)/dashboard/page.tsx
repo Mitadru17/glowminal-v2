@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
-import { Sparkles, Calendar, ArrowRight, Droplets, Sun, Activity, Sparkle, Wind, Eye } from 'lucide-react'
+import { Calendar, ArrowRight, Droplets, Sun, Activity, Sparkle, Wind, Eye } from 'lucide-react'
+import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { SkinScoreRing } from '@/components/shared/SkinScoreRing'
 import { AnimatedSection } from '@/components/shared/AnimatedSection'
@@ -35,7 +36,7 @@ export default async function DashboardPage() {
           </p>
           {isGuest && (
             <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
-              <Sparkles className="h-4 w-4" />
+              <GlowminalLogo variant="symbol" size={16} />
               <span>Create an account to save your Skin Memory</span>
               <Link href="/signup" className="ml-2 font-bold hover:underline">
                 Sign Up &rarr;
@@ -153,8 +154,8 @@ export default async function DashboardPage() {
           {[1, 2, 3].map((item) => (
             <div key={item} className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-divider bg-surface p-6 transition-all hover:border-primary/50 hover:shadow-md active:scale-[0.98]">
               <div>
-                <div className="mb-4 flex h-32 w-full items-center justify-center rounded-xl bg-surface-hover/50">
-                  <Sparkles className="h-8 w-8 text-text-secondary/50" />
+                <div className="mb-4 flex h-32 w-full items-center justify-center rounded-xl bg-surface-hover/50 text-text-secondary/30">
+                  <GlowminalLogo variant="symbol" size={40} theme="current" />
                 </div>
                 <div className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary mb-2">
                   Match: 9{item}%

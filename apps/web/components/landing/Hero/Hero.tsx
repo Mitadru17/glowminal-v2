@@ -1,12 +1,23 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useRef, useEffect } from 'react'
+import { useInView } from 'framer-motion'
 import { HeroBackground } from './HeroBackground'
 import { HeroContent } from './HeroContent'
+import { useNavThemeStore } from '@/store/nav-theme'
 
 export function Hero() {
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { margin: "-10% 0px -50% 0px" })
+  const setNavTheme = useNavThemeStore(s => s.setTheme)
+
+  useEffect(() => {
+    if (isInView) setNavTheme('hero')
+  }, [isInView, setNavTheme])
+
   return (
-    <section className="relative flex h-[100svh] min-h-[800px] w-full flex-col items-center justify-center overflow-hidden">
+    <section ref={ref} className="relative flex h-[100svh] min-h-[800px] w-full flex-col items-center justify-center overflow-hidden">
       {/* Background layer with crossfading videos */}
       <HeroBackground />
       

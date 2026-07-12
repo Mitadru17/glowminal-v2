@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { Sparkles, Bell, User } from 'lucide-react'
+import { Bell, User } from 'lucide-react'
+import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { logoutAction } from '@/app/actions/auth'
 import { useActionState } from 'react'
@@ -12,13 +13,8 @@ export function AppNav() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-divider bg-surface/80 backdrop-blur-md">
       <div className="container-page flex h-16 items-center justify-between">
-        <Link href="/dashboard" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <Sparkles className="h-4 w-4 text-white" />
-          </div>
-          <span className="font-heading text-lg font-bold tracking-tight text-text-primary">
-            Glowminal
-          </span>
+        <Link href="/dashboard" className="flex items-center transition-opacity hover:opacity-80">
+          <GlowminalLogo variant="horizontal" size={140} showTagline={false} />
         </Link>
 
         <div className="flex items-center gap-3">

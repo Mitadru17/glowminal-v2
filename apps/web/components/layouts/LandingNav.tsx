@@ -1,103 +1,293 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion'
-import { Sparkles } from 'lucide-react'
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion'
+import { Sparkles, Menu, X } from 'lucide-react'
+import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
 import { EXPENSIVE_EASING } from '@/components/animations/ScrollReveal'
+import { useNavThemeStore, NavTheme } from '@/store/nav-theme'
 
 const NAV_LINKS = [
-  { href: '#features', label: 'Features' },
-  { href: '#science', label: 'Science' },
+  { href: '/features', label: 'Features' },
+  { href: '/how-it-works', label: 'How It Works' },
+  { href: '/info', label: 'Info' },
 ]
 
+const THEMES: Record<NavTheme, any> = {
+  hero: {
+    background: "rgba(250, 250, 249, 0.4)",
+    backdropFilter: "blur(16px) saturate(1.2)",
+    borderColor: "rgba(255, 255, 255, 0.4)",
+    boxShadow: "0 8px 32px rgba(28, 25, 23, 0.03), inset 0 1px 2px rgba(255, 255, 255, 0.6)",
+    color: "#1C1917", // Warm Charcoal
+    logoBg: "var(--color-primary)",
+    logoIcon: "#FFFFFF",
+    ctaBg: "rgba(255, 255, 255, 0.9)",
+    ctaText: "#1C1917",
+    ctaHover: "rgba(255, 255, 255, 1)",
+  },
+  editorial: {
+    background: "rgba(255, 255, 255, 0.7)",
+    backdropFilter: "blur(24px) saturate(1.4)",
+    borderColor: "rgba(120, 113, 108, 0.15)",
+    boxShadow: "0 12px 40px rgba(0, 0, 0, 0.04), inset 0 1px 0px rgba(255, 255, 255, 0.8)",
+    color: "#2E3A23", // Deep Olive
+    logoBg: "#2E3A23",
+    logoIcon: "#FFFFFF",
+    ctaBg: "#F5F5F4", // Stone White
+    ctaText: "#2E3A23",
+    ctaHover: "#FFFFFF",
+  },
+  scientific: {
+    background: "rgba(230, 235, 231, 0.55)",
+    backdropFilter: "blur(12px) saturate(1)",
+    borderColor: "rgba(28, 34, 31, 0.08)",
+    boxShadow: "0 8px 24px rgba(0, 0, 0, 0.02)",
+    color: "#1C221F", // Deep Graphite
+    logoBg: "#1C221F",
+    logoIcon: "#FFFFFF",
+    ctaBg: "rgba(217, 228, 222, 0.9)", // Muted Sage
+    ctaText: "#1C221F",
+    ctaHover: "rgba(230, 235, 231, 1)",
+  },
+  botanical: {
+    background: "rgba(4, 120, 87, 0.15)",
+    backdropFilter: "blur(32px) saturate(1.5)",
+    borderColor: "rgba(167, 243, 208, 0.2)",
+    boxShadow: "0 16px 48px rgba(2, 44, 34, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.1)",
+    color: "#F2F5F3", // Warm White
+    logoBg: "rgba(255, 255, 255, 0.95)",
+    logoIcon: "var(--color-primary-dark)",
+    ctaBg: "rgba(4, 120, 87, 0.8)", // Emerald Glass
+    ctaText: "#FFFFFF",
+    ctaHover: "rgba(4, 120, 87, 0.95)",
+  },
+  footer: {
+    background: "rgba(2, 44, 34, 0.7)",
+    backdropFilter: "blur(48px) saturate(1.2)",
+    borderColor: "rgba(167, 243, 208, 0.12)",
+    boxShadow: "0 20px 60px rgba(0, 0, 0, 0.2), inset 0 1px 0px rgba(255, 255, 255, 0.05)",
+    color: "rgba(255, 255, 255, 0.9)", // Very Soft White
+    logoBg: "rgba(167, 243, 208, 0.15)",
+    logoIcon: "#A7F3D0",
+    ctaBg: "var(--color-primary)",
+    ctaText: "#FFFFFF",
+    ctaHover: "rgba(16, 185, 129, 1)", // Lighter emerald (increased luminosity)
+  }
+}
+
 export function LandingNav() {
+  const pathname = usePathname()
   const { scrollY } = useScroll()
   const [hidden, setHidden] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-    if (window.scrollY > 50) setScrolled(true)
-  }, [])
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const themeKey = useNavThemeStore(state => state.theme)
 
   // Hide nav when scrolling down, show when scrolling up
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0
-    
-    if (latest > 50) {
-      setScrolled(true)
-    } else {
-      setScrolled(false)
-    }
-
-    if (latest > 150 && latest > previous) {
+    if (latest > 150 && latest > previous && !mobileMenuOpen) {
       setHidden(true)
     } else {
       setHidden(false)
     }
   })
 
-  // Prevent hydration mismatch by enforcing a stable initial render
-  const isScrolled = mounted ? scrolled : false
+  // Prevent hydration errors by ensuring we only animate after mount
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+    // Always default to editorial theme on non-landing pages unless overridden by a zone
+    if (pathname !== '/') {
+      useNavThemeStore.getState().setTheme('editorial')
+    }
+  }, [pathname])
+  
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false)
+  }, [pathname])
+
+  if (!mounted) return null
+
+  const activeTheme = THEMES[themeKey]
 
   return (
-    <motion.header
-      variants={{
-        visible: { y: 0, opacity: 1 },
-        hidden: { y: '-100%', opacity: 0 },
-      }}
-      initial="visible"
-      animate={hidden ? "hidden" : "visible"}
-      transition={{ duration: 0.6, ease: EXPENSIVE_EASING }}
-      className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4"
-    >
-      <nav
-        data-scrolled={isScrolled}
-        className="flex items-center justify-between mx-auto w-full max-w-7xl py-4 px-0 bg-transparent border border-transparent transition-all duration-700 ease-expensive data-[scrolled=true]:max-w-[800px] data-[scrolled=true]:py-3 data-[scrolled=true]:px-6 data-[scrolled=true]:glass-premium data-[scrolled=true]:rounded-full"
+    <>
+      <motion.header
+        variants={{
+          visible: { y: 0, opacity: 1 },
+          hidden: { y: '-100%', opacity: 0 },
+        }}
+        initial="visible"
+        animate={hidden ? "hidden" : "visible"}
+        transition={{ duration: 0.6, ease: EXPENSIVE_EASING }}
+        className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4"
       >
-        {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-3 text-lg font-semibold tracking-tight text-text-primary transition-opacity hover:opacity-80 shrink-0"
+        <motion.nav
+          initial={false}
+          animate={{
+            backgroundColor: mobileMenuOpen ? "rgba(250, 250, 249, 0.95)" : activeTheme.background,
+            backdropFilter: activeTheme.backdropFilter,
+            borderColor: mobileMenuOpen ? "transparent" : activeTheme.borderColor,
+            boxShadow: activeTheme.boxShadow,
+            color: mobileMenuOpen ? "#1C1917" : activeTheme.color
+          }}
+          transition={{ duration: 0.8, ease: EXPENSIVE_EASING }}
+          className="relative z-50 flex items-center justify-between mx-auto w-full max-w-[900px] py-3 px-6 rounded-full border border-solid"
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-primary text-white shadow-sm">
-            <Sparkles className="h-4 w-4" />
-          </span>
-          Glowminal
-        </Link>
+          {/* Logo */}
+          <Link
+            href="/"
+            className="flex items-center transition-opacity hover:opacity-80 shrink-0 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-xl"
+            aria-label="Glowminal Home"
+          >
+            <GlowminalLogo variant="horizontal" size={160} showTagline={false} />
+          </Link>
 
-        {/* Desktop nav */}
-        <div className="hidden items-center gap-10 md:flex">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-text-secondary transition-colors hover:text-text-primary"
+          {/* Desktop nav */}
+          <div className="hidden items-center gap-8 md:flex">
+            {NAV_LINKS.map((link) => {
+              const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/')
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`relative text-sm font-medium transition-opacity focus-visible:outline-none focus-visible:ring-2 rounded-sm ${isActive ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}
+                >
+                  {link.label}
+                  {isActive && (
+                    <motion.span
+                      layoutId="activeNavIndicator"
+                      className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
+                      style={{ backgroundColor: "currentColor" }}
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                  {!isActive && (
+                    <motion.span 
+                      className="absolute -bottom-1 left-0 w-full h-[1px] origin-left scale-x-0 transition-transform duration-300 ease-out hover:scale-x-100 opacity-30"
+                      style={{ backgroundColor: "currentColor" }}
+                    />
+                  )}
+                </Link>
+              )
+            })}
+          </div>
+
+          {/* Desktop Actions */}
+          <div className="hidden items-center gap-4 shrink-0 md:flex">
+            <Link 
+              href="/login" 
+              className="text-sm font-medium opacity-80 hover:opacity-100 transition-opacity px-2 focus-visible:outline-none focus-visible:ring-2 rounded-sm"
             >
-              {link.label}
+              Sign In
             </Link>
-          ))}
-        </div>
+            <Link 
+              href="/signup" 
+              className="group relative inline-flex items-center justify-center overflow-hidden rounded-full px-6 py-2.5 text-sm font-medium shadow-sm transition-transform duration-500 ease-expensive hover:scale-[0.98] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+            >
+              <motion.span 
+                initial={false}
+                animate={{ backgroundColor: activeTheme.ctaBg }}
+                transition={{ duration: 0.8, ease: EXPENSIVE_EASING }}
+                className="absolute inset-0 h-full w-full" 
+              />
+              
+              <motion.span 
+                initial={false}
+                animate={{ backgroundColor: activeTheme.ctaHover }}
+                transition={{ duration: 0.8, ease: EXPENSIVE_EASING }}
+                className="absolute inset-0 h-full w-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" 
+              />
+              
+              <motion.span 
+                initial={false}
+                animate={{ color: activeTheme.ctaText }}
+                transition={{ duration: 0.8, ease: EXPENSIVE_EASING }}
+                className="relative tracking-wide font-semibold"
+              >
+                Start Free Scan
+              </motion.span>
+            </Link>
+          </div>
 
-        {/* Actions */}
-        <div className="flex items-center gap-4 shrink-0">
-          <Link 
-            href="/login" 
-            className="text-sm font-medium text-text-secondary hover:text-text-primary transition-colors hidden sm:block px-2"
+          {/* Mobile Menu Toggle */}
+          <div className="flex md:hidden">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 -mr-2 focus:outline-none"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </motion.nav>
+      </motion.header>
+
+      {/* Fullscreen Mobile Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.98 }}
+            transition={{ duration: 0.5, ease: EXPENSIVE_EASING }}
+            className="fixed inset-0 z-40 bg-background/90 backdrop-blur-2xl flex flex-col justify-center px-8"
           >
-            Sign In
-          </Link>
-          <Link 
-            href="/signup" 
-            className="group relative inline-flex items-center justify-center overflow-hidden rounded-full px-6 py-2.5 text-sm font-medium text-white shadow-sm transition-transform duration-500 ease-expensive hover:scale-95 active:scale-90"
-          >
-            <span className="absolute inset-0 h-full w-full bg-text-primary transition-colors duration-500 ease-expensive group-hover:bg-primary"></span>
-            <span className="relative">Start Scan</span>
-          </Link>
-        </div>
-      </nav>
-    </motion.header>
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(4,120,87,0.05),transparent_70%)] pointer-events-none" />
+            
+            <nav className="flex flex-col gap-8 text-2xl font-light tracking-tight z-10">
+              {NAV_LINKS.map((link, i) => (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: i * 0.1, ease: EXPENSIVE_EASING }}
+                  key={link.href}
+                >
+                  <Link
+                    href={link.href}
+                    className="flex items-center gap-4 text-text-primary hover:text-primary transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+              
+              <div className="h-px w-12 bg-divider my-4" />
+              
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.3, ease: EXPENSIVE_EASING }}
+              >
+                <Link
+                  href="/login"
+                  className="text-lg font-medium text-text-secondary hover:text-text-primary transition-colors"
+                >
+                  Sign In
+                </Link>
+              </motion.div>
+              
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.4, ease: EXPENSIVE_EASING }}
+                className="mt-4"
+              >
+                <Link
+                  href="/signup"
+                  className="inline-flex items-center justify-center overflow-hidden rounded-full px-8 py-4 text-base font-medium bg-primary text-white hover:bg-primary-dark transition-colors"
+                >
+                  Start Free Scan
+                </Link>
+              </motion.div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   )
 }
