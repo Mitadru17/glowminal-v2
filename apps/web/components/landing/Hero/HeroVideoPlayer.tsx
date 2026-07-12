@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { HERO_VIDEOS } from '@/lib/hero-video'
+import { useLoadingStore } from '@/store/loading'
 
 const CROSSFADE_DURATION_MS = 3000
 const CROSSFADE_DURATION_SEC = CROSSFADE_DURATION_MS / 1000
@@ -112,6 +113,9 @@ export function HeroVideoPlayer() {
         playsInline
         loop={false}
         preload="auto"
+        onCanPlayThrough={() => {
+          useLoadingStore.getState().setLoaded()
+        }}
         onTimeUpdate={() => handleTimeUpdate('A')}
         className={commonVideoClasses}
         style={{
