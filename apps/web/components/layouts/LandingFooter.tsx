@@ -4,6 +4,11 @@ import { useRef, useEffect } from 'react'
 import { m as motion, useInView } from "framer-motion"
 import { ArrowUp, Check } from 'lucide-react'
 import { useNavThemeStore } from '@/store/nav-theme'
+import dynamic from 'next/dynamic'
+
+const MascotCanvas = dynamic(() => import('@/components/ui/MascotCanvas').then(mod => mod.MascotCanvas), {
+  ssr: false,
+})
 
 const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -94,16 +99,16 @@ export function LandingFooter() {
           You've reached the bottom
         </motion.p>
 
-        {/* Large Title */}
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
+        {/* Mascot Canvas */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="sip-display text-[18vw] md:text-[14vw] lg:text-[12vw] leading-[0.9] text-white text-center mb-16 tracking-wide"
+          className="w-full max-w-2xl mx-auto h-[40vh] min-h-[400px] mb-12 relative z-20"
         >
-          GLOWMINAL
-        </motion.h2>
+          <MascotCanvas />
+        </motion.div>
 
         {/* Email Signup - Recreated exactly like reference */}
         <motion.div
