@@ -96,7 +96,9 @@ export function FeatureNarrative() {
   // 0.75 - 1.00 : Chapter 4
   
   return (
-    <div ref={containerRef} className="relative w-full h-[400vh]">
+    <div ref={containerRef} className="relative w-full">
+      {/* DESKTOP / TABLET LANDSCAPE: Sticky Crossfade Engine */}
+      <div className="hidden lg:block relative w-full h-[400vh]">
       <div className="sticky top-0 left-0 w-full h-[100svh] overflow-hidden flex items-center">
         
         {/* Dynamic Environmental Background */}
@@ -343,9 +345,110 @@ export function FeatureNarrative() {
               })}
             </div>
             
+            
           </div>
-          
         </div>
+      </div>
+    </div>
+
+      {/* MOBILE / PORTRAIT: Premium Stacked Editorial Cards */}
+      <div className="block lg:hidden w-full px-4 sm:px-6 py-24 space-y-8 bg-background">
+        <div className="text-center mb-16">
+          <span className="font-mono text-[10px] uppercase tracking-mono text-primary bg-primary/10 px-3 py-1 rounded-full">
+            Glowminal OS Narrative
+          </span>
+        </div>
+
+        {CHAPTERS.map((chapter, i) => {
+          const isDark = i === 3;
+          const isEven = i % 2 === 0;
+
+          return (
+            <motion.div 
+              key={chapter.index}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }} // EASING.expensive
+              className={`flex flex-col w-full rounded-[2rem] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border ${
+                isDark 
+                  ? "bg-[#022C22] border-white/10 text-white" 
+                  : "bg-surface-elevated border-black/5 text-text-primary"
+              }`}
+            >
+              
+              {/* Image Section (Alternates Top/Bottom) */}
+              <div className={`relative w-full aspect-[4/3] sm:aspect-[16/10] bg-black/5 ${isEven ? 'order-1' : 'order-2'}`}>
+                <Image 
+                  src={chapter.imageSrc} 
+                  alt={chapter.imageAlt}
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                  style={{ filter: 'saturate(85%) contrast(110%) brightness(95%) sepia(10%) hue-rotate(-5deg)' }}
+                />
+                <div className="absolute inset-0 bg-background/5 backdrop-saturate-[1.05] mix-blend-overlay pointer-events-none" />
+                <div className="absolute inset-0 ring-1 ring-inset ring-black/5 pointer-events-none" />
+              </div>
+
+              {/* Text Section */}
+              <div className={`flex flex-col p-8 sm:p-10 ${isEven ? 'order-2' : 'order-1'}`}>
+                <div 
+                  className={`font-mono text-[10px] uppercase tracking-mono flex items-center gap-3 mb-6 ${
+                    isDark ? "text-white/60" : "text-text-secondary"
+                  }`}
+                >
+                  <span className="opacity-60">{chapter.index}</span>
+                  <span className="h-px w-8 bg-current opacity-20"></span>
+                  <span className="flex items-center gap-2 font-medium text-primary">
+                    <chapter.icon className="w-3.5 h-3.5" /> 
+                    {chapter.subtitle}
+                  </span>
+                </div>
+                
+                <h2 className="text-4xl xs:text-5xl font-light tracking-tight leading-[1] mb-6">
+                  {chapter.title}
+                </h2>
+                
+                <p className={`text-base font-light leading-relaxed mb-8 ${isDark ? "text-white/80" : "text-text-secondary"}`}>
+                  {chapter.description}
+                </p>
+
+                <div className={`space-y-3 pl-4 mb-8 border-l ${isDark ? "border-white/20" : "border-primary/20"}`}>
+                  {chapter.capabilities.map((cap, j) => (
+                    <div key={j} className="flex items-center gap-3">
+                      <div className="w-1 h-1 rounded-full bg-primary/50" />
+                      <span className={`text-sm font-light tracking-wide ${isDark ? "text-white/90" : "text-text-primary"}`}>
+                        {cap}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-6 mt-auto pt-4">
+                  <div className="flex flex-col gap-1">
+                    <span className={`font-mono text-[8px] uppercase tracking-mono opacity-50 ${isDark ? "text-white" : "text-text-secondary"}`}>
+                      Status
+                    </span>
+                    <span className={`font-mono text-[10px] uppercase tracking-mono flex items-center gap-2 ${isDark ? "text-white" : "text-text-primary"}`}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent-lime animate-pulse" />
+                      {chapter.status}
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span className={`font-mono text-[8px] uppercase tracking-mono opacity-50 ${isDark ? "text-white" : "text-text-secondary"}`}>
+                      Read Time
+                    </span>
+                    <span className={`font-mono text-[10px] uppercase tracking-mono ${isDark ? "text-white" : "text-text-primary"}`}>
+                      {chapter.readingTime}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </motion.div>
+          )
+        })}
       </div>
     </div>
   )

@@ -105,7 +105,8 @@ export function LandingFooter() {
         viewport={{ once: true }}
         className="w-full bg-[#011C15] text-white/40 pt-12 pb-[calc(max(3rem,env(safe-area-inset-bottom)))] border-t border-white/5 relative z-10 px-4 md:px-0"
       >
-        <div className="container-marketing flex flex-col md:flex-row justify-between items-start md:items-center gap-10 md:gap-8">
+        {/* Desktop Utility Footer */}
+        <div className="hidden md:flex container-marketing flex-row justify-between items-center gap-8">
           
           <div className="flex items-center gap-4">
             <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-white/40 hover:text-white/80 transition-colors">
@@ -146,6 +147,48 @@ export function LandingFooter() {
             </div>
           </button>
           
+        </div>
+
+        {/* Mobile Utility Footer */}
+        <div className="flex md:hidden flex-col gap-10 px-2 sm:px-6">
+          <div className="flex justify-between items-center">
+            <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/60 shadow-inner">
+              <GlowminalLogo variant="symbol" size={20} showTagline={false} />
+            </div>
+            <button 
+              onClick={scrollToTop} 
+              className="flex items-center justify-center w-12 h-12 rounded-full border border-white/10 bg-white/5 active:scale-95 touch-manipulation transition-transform shadow-inner"
+              aria-label="Scroll to top"
+            >
+              <ArrowUp className="w-4 h-4 text-white/60" />
+            </button>
+          </div>
+          
+          <nav className="grid grid-cols-2 gap-y-8 gap-x-4">
+            {[
+              { label: 'Privacy', href: '/privacy' },
+              { label: 'Terms', href: '/terms' },
+              { label: 'Science', href: '/info' },
+              { label: 'Contact', href: '/contact' }
+            ].map((link) => (
+              <Link 
+                key={link.label} 
+                href={link.href}
+                className="font-mono text-xs uppercase tracking-widest text-white/60 active:text-white transition-colors touch-manipulation py-2"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          
+          <div className="pt-8 border-t border-white/10 flex items-center justify-between">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-white/30">
+              © {new Date().getFullYear()} Glowminal
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-white/30">
+              Beta 1.0
+            </span>
+          </div>
         </div>
       </motion.footer>
     </div>
