@@ -7,7 +7,7 @@ import { useInView, m as motion } from "framer-motion"
 import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
 import { EASING, DURATION } from '@/lib/theme/motion'
 import { useNavThemeStore } from '@/store/nav-theme'
-import ShinyText from '@/components/animations/ShinyText'
+import { GlowminalGraphic } from '@/components/ui/GlowminalGraphic'
 import { WaitlistForm } from '@/components/landing/WaitlistForm'
 
 export function LandingFooter() {
@@ -53,19 +53,13 @@ export function LandingFooter() {
               <span className="text-white font-normal italic font-editorial mt-2 block">Now I finally have a way to understand it.</span>
             </p>
             
-            {/* The Signature */}
-            <h2 className="text-[11vw] xs:text-[11vw] sm:text-[9vw] md:text-[8vw] leading-[0.8] tracking-tight font-light flex items-center justify-center relative select-none w-full">
-              <ShinyText 
-                color="rgba(255,255,255,0.15)" 
-                shineColor="rgba(255,255,255,0.9)" 
-                speed={4}
-                className="flex items-center justify-center"
-              >
-                <span className="font-[family-name:var(--font-jost)] tracking-[0.1em] font-light uppercase mr-1 md:mr-1 opacity-90">GLOW</span>
-                <span className="font-editorial italic font-light pr-1 md:pr-2 uppercase">MINAL</span>
-              </ShinyText>
-              <span className="font-editorial italic font-light text-white/20 absolute -right-2 xs:-right-1 md:-right-6 -top-1 md:-top-2 text-lg xs:text-xl md:text-3xl">®</span>
-            </h2>
+            {/* The Interactive Brand Graphic */}
+            <GlowminalGraphic 
+              width={340}
+              theme="footer"
+              interactive
+              className="w-[clamp(240px,60vw,400px)]"
+            />
           </motion.div>
 
           {/* 2. Newsletter CTA */}
