@@ -68,7 +68,7 @@ export function LandingFooter() {
         letter-spacing: 0.02em;
       }
     `}} />
-    <footer ref={ref} className="relative bg-primary-dark text-white min-h-screen flex flex-col overflow-hidden selection:bg-accent-lime/30 selection:text-white">
+    <footer ref={ref} className="relative bg-[#022C22] text-white min-h-screen flex flex-col overflow-hidden selection:bg-accent-lime/30 selection:text-white">
       
       {/* Background Pattern - Large minimal circles mimicking the reference */}
       <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden mix-blend-screen">
