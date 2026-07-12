@@ -352,21 +352,34 @@ export function FeatureNarrative() {
     </div>
 
       {/* MOBILE / PORTRAIT: Premium Stacked Editorial Cards */}
-      <motion.div 
-        className="block lg:hidden w-full px-4 sm:px-6 py-24 space-y-8"
-        style={{
-          backgroundColor: useTransform(
-            smoothProgress,
-            [0, 0.33, 0.66, 0.85, 1],
-            ["#FAFAF9", "#F2F5F3", "#E8F0EA", "#184133", "#022C22"]
-          )
-        }}
-      >
-        <div className="text-center mb-16">
-          <span className="font-mono text-[10px] uppercase tracking-mono text-primary bg-primary/10 px-3 py-1 rounded-full">
-            Glowminal OS Narrative
-          </span>
+      <div className="block lg:hidden w-full relative">
+        
+        {/* Mobile Sticky Background Layer */}
+        <div className="sticky top-0 left-0 w-full h-[100svh] overflow-hidden z-0">
+          <motion.div 
+            className="absolute inset-0"
+            style={{
+              backgroundColor: useTransform(
+                smoothProgress,
+                [0, 0.33, 0.66, 0.85, 1],
+                ["#FAFAF9", "#F2F5F3", "#E8F0EA", "#184133", "#022C22"]
+              )
+            }}
+          />
+          {/* Global Grain */}
+          <div 
+            className="absolute inset-0 opacity-[0.03] mix-blend-multiply pointer-events-none"
+            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} 
+          />
         </div>
+
+        {/* Mobile Cards Content */}
+        <div className="relative z-10 px-4 sm:px-6 pb-24 pt-24 -mt-[100svh] space-y-8">
+          <div className="text-center mb-16">
+            <span className="font-mono text-[10px] uppercase tracking-mono text-primary bg-primary/10 px-3 py-1 rounded-full shadow-sm backdrop-blur-md">
+              Glowminal OS Narrative
+            </span>
+          </div>
 
         {CHAPTERS.map((chapter, i) => {
           const isDark = i === 3;
@@ -458,7 +471,8 @@ export function FeatureNarrative() {
             </motion.div>
           )
         })}
-      </motion.div>
+        </div>
+      </div>
     </div>
   )
 }
