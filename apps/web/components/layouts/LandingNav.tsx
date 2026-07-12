@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion'
 import { Sparkles, Menu, X } from 'lucide-react'
 import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
-import { EXPENSIVE_EASING } from '@/components/animations/ScrollReveal'
+import { EASING, DURATION } from '@/lib/theme/motion'
 import { useNavThemeStore, NavTheme } from '@/store/nav-theme'
 
 const NAV_LINKS = [
@@ -123,7 +123,7 @@ export function LandingNav() {
         }}
         initial="visible"
         animate={hidden ? "hidden" : "visible"}
-        transition={{ duration: 0.6, ease: EXPENSIVE_EASING }}
+        transition={{ duration: DURATION.hero, ease: EASING.expensive }}
         className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4"
       >
         <motion.nav
@@ -135,13 +135,13 @@ export function LandingNav() {
             boxShadow: activeTheme.boxShadow,
             color: mobileMenuOpen ? "#1C1917" : activeTheme.color
           }}
-          transition={{ duration: 0.8, ease: EXPENSIVE_EASING }}
+          transition={{ duration: DURATION.scene, ease: EASING.expensive }}
           className="relative z-50 flex items-center justify-between mx-auto w-full max-w-[900px] py-3 px-6 rounded-full border border-solid"
         >
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center transition-opacity hover:opacity-80 shrink-0 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 rounded-xl"
+            className="flex items-center transition-opacity hover:opacity-80 shrink-0 group focus-visible:outline-none"
             aria-label="Glowminal Home"
           >
             <GlowminalLogo variant="horizontal" size={160} showTagline={false} />
@@ -155,7 +155,7 @@ export function LandingNav() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative text-sm font-medium transition-opacity focus-visible:outline-none focus-visible:ring-2 rounded-sm ${isActive ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}
+                  className={`relative text-sm font-medium transition-opacity focus-visible:outline-none ${isActive ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}
                 >
                   {link.label}
                   {isActive && (
@@ -192,21 +192,21 @@ export function LandingNav() {
               <motion.span 
                 initial={false}
                 animate={{ backgroundColor: activeTheme.ctaBg }}
-                transition={{ duration: 0.8, ease: EXPENSIVE_EASING }}
+                transition={{ duration: 0.8, ease: EASING.expensive }}
                 className="absolute inset-0 h-full w-full" 
               />
               
               <motion.span 
                 initial={false}
                 animate={{ backgroundColor: activeTheme.ctaHover }}
-                transition={{ duration: 0.8, ease: EXPENSIVE_EASING }}
+                transition={{ duration: 0.8, ease: EASING.expensive }}
                 className="absolute inset-0 h-full w-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" 
               />
               
               <motion.span 
                 initial={false}
                 animate={{ color: activeTheme.ctaText }}
-                transition={{ duration: 0.8, ease: EXPENSIVE_EASING }}
+                transition={{ duration: 0.8, ease: EASING.expensive }}
                 className="relative tracking-wide font-semibold"
               >
                 Start Free Scan
@@ -234,7 +234,7 @@ export function LandingNav() {
             initial={{ opacity: 0, y: -20, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.98 }}
-            transition={{ duration: 0.5, ease: EXPENSIVE_EASING }}
+            transition={{ duration: 0.5, ease: EASING.expensive }}
             className="fixed inset-0 z-40 bg-background/90 backdrop-blur-2xl flex flex-col justify-center px-8"
           >
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(4,120,87,0.05),transparent_70%)] pointer-events-none" />
@@ -244,7 +244,7 @@ export function LandingNav() {
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: i * 0.1, ease: EXPENSIVE_EASING }}
+                  transition={{ duration: 0.5, delay: i * 0.1, ease: EASING.expensive }}
                   key={link.href}
                 >
                   <Link
@@ -261,7 +261,7 @@ export function LandingNav() {
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.3, ease: EXPENSIVE_EASING }}
+                transition={{ duration: 0.5, delay: 0.3, ease: EASING.expensive }}
               >
                 <Link
                   href="/login"
@@ -274,7 +274,7 @@ export function LandingNav() {
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.4, ease: EXPENSIVE_EASING }}
+                transition={{ duration: 0.5, delay: 0.4, ease: EASING.expensive }}
                 className="mt-4"
               >
                 <Link

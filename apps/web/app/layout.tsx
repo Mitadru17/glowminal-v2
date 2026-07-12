@@ -3,6 +3,7 @@ import { Inter, Newsreader, Jost } from 'next/font/google'
 import { Toaster } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { QueryProvider } from '@/components/providers/QueryProvider'
+import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider'
 import './globals.css'
 
 const inter = Inter({
@@ -81,12 +82,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${inter.variable} ${newsreader.variable} ${jost.variable}`} suppressHydrationWarning>
       <body className="overflow-x-hidden antialiased">
-        <QueryProvider>
-          <TooltipProvider>
-            {children}
-            <Toaster
-              theme="system"
-              position="bottom-right"
+        <SmoothScrollProvider>
+          <QueryProvider>
+            <TooltipProvider>
+              {children}
+              <Toaster
+                theme="system"
+                position="bottom-right"
               toastOptions={{
                 style: {
                   background: 'var(--color-surface)',
@@ -97,6 +99,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             />
           </TooltipProvider>
         </QueryProvider>
+        </SmoothScrollProvider>
       </body>
     </html>
   )

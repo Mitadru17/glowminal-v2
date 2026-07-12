@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Sparkles, ArrowUp, ArrowRight, Shield } from 'lucide-react'
 import { motion, useInView } from 'framer-motion'
 import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
-import { EXPENSIVE_EASING } from '@/components/animations/ScrollReveal'
+import { EASING, DURATION } from '@/lib/theme/motion'
 import { useNavThemeStore } from '@/store/nav-theme'
 import ShinyText from '@/components/animations/ShinyText'
 
@@ -39,7 +39,7 @@ export function LandingFooter() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: EXPENSIVE_EASING }}
+            transition={{ duration: 1.2, ease: EASING.expensive }}
             viewport={{ once: true, margin: '-50px' }}
             className="flex flex-col items-center"
           >
@@ -52,7 +52,7 @@ export function LandingFooter() {
           <motion.div
             initial={{ opacity: 0, filter: 'blur(16px)', scale: 0.98 }}
             whileInView={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
-            transition={{ duration: 1.8, delay: 0.3, ease: EXPENSIVE_EASING }}
+            transition={{ duration: 1.8, delay: 0.3, ease: EASING.expensive }}
             viewport={{ once: true, margin: '-50px' }}
             className="mb-20"
           >
@@ -62,7 +62,6 @@ export function LandingFooter() {
                 color="rgba(255,255,255,0.2)" 
                 shineColor="rgba(255,255,255,0.9)" 
                 speed={4}
-                mouseReactive={true}
                 className="flex items-center justify-center"
               >
                 <span className="font-[family-name:var(--font-jost)] tracking-[0.1em] font-light uppercase mr-1 opacity-90">GLOW</span>
@@ -75,7 +74,7 @@ export function LandingFooter() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.7, ease: EXPENSIVE_EASING }}
+            transition={{ duration: 1.2, delay: 0.7, ease: EASING.expensive }}
             viewport={{ once: true, margin: '-50px' }}
             className="w-full max-w-md flex flex-col items-center"
           >
@@ -115,7 +114,7 @@ export function LandingFooter() {
       <motion.footer 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        transition={{ duration: 1.5, delay: 1.1, ease: EXPENSIVE_EASING }}
+        transition={{ duration: 1.5, delay: 1.1, ease: EASING.expensive }}
         viewport={{ once: true }}
         className="w-full bg-[#011C15] text-white/40 py-12 border-t border-white/5 relative z-10"
       >

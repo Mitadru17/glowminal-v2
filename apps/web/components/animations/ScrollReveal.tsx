@@ -2,8 +2,7 @@
 
 import { motion, useInView, Variants } from 'framer-motion'
 import { useRef, ReactNode } from 'react'
-
-export const EXPENSIVE_EASING = [0.22, 1, 0.36, 1] as const // The core physical easing curve
+import { EASING, DURATION } from '@/lib/theme/motion'
 
 interface ScrollRevealProps {
   children: ReactNode
@@ -54,7 +53,7 @@ export const ScrollReveal = ({
       transition: {
         duration,
         delay,
-        ease: EXPENSIVE_EASING,
+        ease: EASING.expensive,
       },
     },
   }
