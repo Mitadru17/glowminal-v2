@@ -40,8 +40,8 @@ export function LandingFooter() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: EASING.expensive }}
-            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.8, ease: EASING.expensive }}
+            viewport={{ once: true, margin: '100px' }}
             className="flex flex-col items-center"
           >
             <p className="text-xl md:text-2xl font-light text-white/80 mb-12 tracking-editorial max-w-lg">
@@ -53,8 +53,8 @@ export function LandingFooter() {
           <motion.div
             initial={{ opacity: 0, filter: 'blur(16px)', scale: 0.98 }}
             whileInView={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
-            transition={{ duration: 1.8, delay: 0.3, ease: EASING.expensive }}
-            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 1.2, ease: EASING.expensive }}
+            viewport={{ once: true, margin: '100px' }}
             className="mb-20"
           >
             {/* The Signature */}
@@ -75,8 +75,8 @@ export function LandingFooter() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.7, ease: EASING.expensive }}
-            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.8, ease: EASING.expensive }}
+            viewport={{ once: true, margin: '100px' }}
             className="w-full max-w-md flex flex-col items-center"
           >
             <div id="waitlist-footer" className="w-full">
@@ -101,7 +101,7 @@ export function LandingFooter() {
       <motion.footer 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        transition={{ duration: 1.5, delay: 1.1, ease: EASING.expensive }}
+        transition={{ duration: 0.8, ease: EASING.expensive }}
         viewport={{ once: true }}
         className="w-full bg-[#011C15] text-white/40 py-12 border-t border-white/5 relative z-10"
       >

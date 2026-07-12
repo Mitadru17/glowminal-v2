@@ -9,8 +9,14 @@ import { EASING, DURATION } from '@/lib/theme/motion'
 export function LoadingScreen() {
   const isLoaded = useLoadingStore(s => s.isLoaded)
   const setLoaded = useLoadingStore(s => s.setLoaded)
+  const [minTimePassed, setMinTimePassed] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [loadingText, setLoadingText] = useState('Initializing scan')
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMinTimePassed(true), 2500)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     setMounted(true)
@@ -49,7 +55,7 @@ export function LoadingScreen() {
   
   return (
     <AnimatePresence>
-      {!isLoaded && (
+      {(!isLoaded || !minTimePassed) && (
         <motion.div
           key="loading-screen"
           initial={{ opacity: 1 }}
