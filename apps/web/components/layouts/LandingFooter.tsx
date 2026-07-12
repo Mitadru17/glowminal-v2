@@ -8,6 +8,7 @@ import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
 import { EASING, DURATION } from '@/lib/theme/motion'
 import { useNavThemeStore } from '@/store/nav-theme'
 import ShinyText from '@/components/animations/ShinyText'
+import { WaitlistForm } from '@/components/landing/WaitlistForm'
 
 export function LandingFooter() {
   const ref = useRef<HTMLDivElement>(null)
@@ -78,23 +79,9 @@ export function LandingFooter() {
             viewport={{ once: true, margin: '-50px' }}
             className="w-full max-w-md flex flex-col items-center"
           >
-            <form 
-              className="relative flex items-center w-full"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <input 
-                type="email" 
-                placeholder="Enter email for early access"
-                required
-                className="w-full bg-white/[0.03] border border-white/10 text-white placeholder:text-white/30 rounded-full px-8 py-5 outline-none focus:border-accent-mint/50 focus:bg-white/[0.08] focus:shadow-[inset_0_0_20px_rgba(4,120,87,0.15)] transition-all duration-700 ease-expensive backdrop-blur-3xl shadow-[0_8px_32px_rgba(0,0,0,0.2)] font-light text-base ring-0 focus:ring-1 focus:ring-accent-mint/40"
-              />
-              <button 
-                type="submit"
-                className="absolute right-2 top-2 bottom-2 px-6 flex items-center justify-center rounded-full bg-white text-[#011C15] font-medium tracking-wide text-sm hover:scale-[0.98] active:scale-[0.96] transition-transform duration-500 ease-expensive"
-              >
-                Join Waitlist
-              </button>
-            </form>
+            <div id="waitlist-footer" className="w-full">
+              <WaitlistForm theme="dark" />
+            </div>
             <div className="mt-6 flex flex-col items-center text-center space-y-2 opacity-80">
               <p className="text-white/50 text-xs font-light tracking-wide flex items-center justify-center gap-2">
                 <Shield className="w-3.5 h-3.5 opacity-70" /> Phase 1 access is rolling out in limited batches.

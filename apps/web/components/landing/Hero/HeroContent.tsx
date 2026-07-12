@@ -8,8 +8,8 @@ import { SplitTextReveal } from '@/components/shared/SplitTextReveal'
 import { EASING, DURATION } from '@/lib/theme/motion'
 
 // Upgraded Magnetic Button (Optimized with useMotionValue)
-const MagneticButton = ({ children, className, href }: { children: React.ReactNode, className?: string, href: string }) => {
-  const ref = useRef<HTMLAnchorElement>(null)
+const MagneticButton = ({ children, className, onClick }: { children: React.ReactNode, className?: string, onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void }) => {
+  const ref = useRef<HTMLButtonElement>(null)
   
   // Use MotionValues to prevent React re-renders on every mouse move
   const x = useMotionValue(0)
@@ -19,7 +19,7 @@ const MagneticButton = ({ children, className, href }: { children: React.ReactNo
   const springX = useSpring(x, springConfig)
   const springY = useSpring(y, springConfig)
 
-  const handleMouse = (e: MouseEvent<HTMLAnchorElement>) => {
+  const handleMouse = (e: MouseEvent<HTMLButtonElement>) => {
     const { clientX, clientY } = e
     const { height, width, left, top } = ref.current!.getBoundingClientRect()
     const middleX = clientX - (left + width / 2)
@@ -35,18 +35,18 @@ const MagneticButton = ({ children, className, href }: { children: React.ReactNo
 
   return (
     <motion.div style={{ x: springX, y: springY }}>
-      <Link 
+      <button 
         ref={ref}
         onMouseMove={handleMouse}
         onMouseLeave={reset}
-        href={href} 
+        onClick={onClick}
         className={`group relative inline-flex items-center justify-center overflow-hidden rounded-full ${className}`}
       >
         <span className="absolute inset-0 h-full w-full bg-text-primary transition-colors duration-500 ease-expensive group-hover:bg-primary"></span>
         <span className="relative flex items-center gap-2 text-white font-medium transition-transform duration-500 ease-expensive group-hover:scale-95">
           {children}
         </span>
-      </Link>
+      </button>
     </motion.div>
   )
 }
@@ -98,7 +98,17 @@ export function HeroContent() {
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1, duration: 0.8, ease: EASING.expensive }}
         className="mt-12"
       >
-        <MagneticButton href="/signup" className="h-16 px-12 text-lg shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+        <MagneticButton 
+          onClick={() => {
+            import('sonner').then(({ toast }) => {
+              toast('Coming Soon', {
+                description: 'We are currently in private beta. You can join the waitlist below.',
+              })
+            })
+            document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })
+          }} 
+          className="h-16 px-12 text-lg shadow-[0_8px_30px_rgb(0,0,0,0.08)]"
+        >
           Begin Free Scan <ArrowRight className="h-5 w-5" />
         </MagneticButton>
       </motion.div>

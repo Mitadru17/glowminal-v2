@@ -179,14 +179,24 @@ export function LandingNav() {
 
           {/* Desktop Actions */}
           <div className="hidden items-center gap-4 shrink-0 md:flex">
-            <Link 
-              href="/login" 
+            <button 
+              onClick={() => {
+                import('sonner').then(({ toast }) => {
+                  toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
+                })
+                document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })
+              }}
               className="text-sm font-medium opacity-80 hover:opacity-100 transition-opacity px-2 focus-visible:outline-none focus-visible:ring-2 rounded-sm"
             >
               Sign In
-            </Link>
-            <Link 
-              href="/signup" 
+            </button>
+            <button 
+              onClick={() => {
+                import('sonner').then(({ toast }) => {
+                  toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
+                })
+                document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })
+              }}
               className="group relative inline-flex items-center justify-center overflow-hidden rounded-full px-6 py-2.5 text-sm font-medium shadow-sm transition-transform duration-500 ease-expensive hover:scale-[0.98] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
             >
               <motion.span 
@@ -211,7 +221,7 @@ export function LandingNav() {
               >
                 Start Free Scan
               </motion.span>
-            </Link>
+            </button>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -263,12 +273,18 @@ export function LandingNav() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 0.3, ease: EASING.expensive }}
               >
-                <Link
-                  href="/login"
-                  className="text-lg font-medium text-text-secondary hover:text-text-primary transition-colors"
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false)
+                    import('sonner').then(({ toast }) => {
+                      toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
+                    })
+                    document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                  className="text-lg font-medium text-text-secondary hover:text-text-primary transition-colors text-left"
                 >
                   Sign In
-                </Link>
+                </button>
               </motion.div>
               
               <motion.div
@@ -277,12 +293,18 @@ export function LandingNav() {
                 transition={{ duration: 0.5, delay: 0.4, ease: EASING.expensive }}
                 className="mt-4"
               >
-                <Link
-                  href="/signup"
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false)
+                    import('sonner').then(({ toast }) => {
+                      toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
+                    })
+                    document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })
+                  }}
                   className="inline-flex items-center justify-center overflow-hidden rounded-full px-8 py-4 text-base font-medium bg-primary text-white hover:bg-primary-dark transition-colors"
                 >
                   Start Free Scan
-                </Link>
+                </button>
               </motion.div>
             </nav>
           </motion.div>
