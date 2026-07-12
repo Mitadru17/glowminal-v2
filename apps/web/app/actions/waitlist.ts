@@ -22,17 +22,13 @@ export type WaitlistState = {
   message?: string
 }
 
-export async function joinWaitlist(prevState: WaitlistState, formData: FormData): Promise<WaitlistState> {
+export async function joinWaitlist(data: { email: string; source?: string; hp?: string }): Promise<WaitlistState> {
   try {
     // 1. Validation & Sanitization
-    const rawEmail = formData.get('email')
-    const rawSource = formData.get('source') || 'website'
-    const rawHp = formData.get('hp')
-
     const validatedData = joinWaitlistSchema.safeParse({
-      email: rawEmail,
-      source: rawSource,
-      hp: rawHp,
+      email: data.email,
+      source: data.source || 'website',
+      hp: data.hp,
     })
 
     if (!validatedData.success) {

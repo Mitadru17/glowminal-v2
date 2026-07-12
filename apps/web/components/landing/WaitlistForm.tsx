@@ -22,12 +22,7 @@ export function WaitlistForm({ theme = 'light' }: { theme?: 'light' | 'dark' }) 
     setUiState('securing')
     setErrorMessage('')
 
-    const formData = new FormData()
-    formData.append('email', email)
-    formData.append('source', 'website')
-    // Add honeypot field (hidden from users)
     const hp = (document.getElementById('hp') as HTMLInputElement)?.value
-    if (hp) formData.append('hp', hp)
 
     // Artificial delay to show "Securing your place..."
     await new Promise((resolve) => setTimeout(resolve, 800))
@@ -36,7 +31,7 @@ export function WaitlistForm({ theme = 'light' }: { theme?: 'light' | 'dark' }) 
     // Artificial delay to show "Sending confirmation..."
     await new Promise((resolve) => setTimeout(resolve, 800))
 
-    const result = await joinWaitlist({ status: 'idle' }, formData)
+    const result = await joinWaitlist({ email, source: 'website', hp })
 
     if (result.status === 'success') {
       setUiState('success')
