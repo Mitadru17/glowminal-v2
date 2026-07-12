@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from 'framer-motion'
 import { Activity, Sparkle, ScanFace, Droplets, ArrowRight } from 'lucide-react'
 import { useNavThemeStore } from '@/store/nav-theme'
+import Image from 'next/image'
 
 const CHAPTERS = [
   {
@@ -198,7 +199,8 @@ export function FeatureNarrative() {
                     className="absolute top-1/2 left-0 w-full -translate-y-1/2"
                     style={{
                       opacity: useTransform(smoothProgress, [start, peak, end], [0, 1, 0]),
-                      pointerEvents: i === 0 ? "auto" : "none" // Manage clicking
+                      pointerEvents: i === 0 ? "auto" : "none", // Manage clicking
+                      willChange: "opacity, transform"
                     }}
                   >
                     <motion.div 
@@ -315,13 +317,17 @@ export function FeatureNarrative() {
                     style={{
                       opacity: useTransform(smoothProgress, [start, peak, end], [0, 1, 0]),
                       scale: useTransform(smoothProgress, [start, peak, end], [0.95, 1, 1.05]),
-                      filter: useTransform(smoothProgress, [start, peak, end], ["blur(10px)", "blur(0px)", "blur(10px)"])
+                      filter: useTransform(smoothProgress, [start, peak, end], ["blur(10px)", "blur(0px)", "blur(10px)"]),
+                      willChange: "transform, opacity, filter"
                     }}
                   >
-                    <img 
+                    <Image 
                       src={chapter.imageSrc} 
                       alt={chapter.imageAlt}
-                      className="w-full h-full object-cover"
+                      fill
+                      priority={true}
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover"
                       style={{ 
                         filter: 'saturate(85%) contrast(110%) brightness(95%) sepia(10%) hue-rotate(-5deg)' 
                       }}

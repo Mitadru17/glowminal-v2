@@ -3,6 +3,7 @@
 import { Activity, Sparkle, ScanFace, Droplets } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
+import Image from 'next/image'
 
 const BENTO_ITEMS = [
   {
@@ -79,11 +80,12 @@ export function BentoGrid() {
 
             {/* Campaign Visual Layer */}
             <div className="absolute inset-0 z-0">
-               <img 
+               <Image 
                  src={item.imageSrc} 
                  alt={item.imageAlt}
-                 className="w-full h-full object-cover opacity-90 scale-105 transition-transform duration-cinematic ease-expensive group-hover:scale-100"
-                 // Cinematic Color Grading
+                 fill
+                 sizes="(max-width: 768px) 100vw, 50vw"
+                 className="object-cover opacity-90 scale-105 transition-transform duration-cinematic ease-expensive group-hover:scale-100"
                  style={{ 
                    filter: 'saturate(85%) contrast(110%) brightness(95%) sepia(10%) hue-rotate(-5deg)' 
                  }}

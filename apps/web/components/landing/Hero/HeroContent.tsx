@@ -67,7 +67,7 @@ export function HeroContent() {
 
   return (
     <motion.div 
-      style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
+      style={{ y: heroY, opacity: heroOpacity, scale: heroScale, willChange: "transform, opacity" }}
       className="relative z-10 flex w-full max-w-7xl flex-col items-center px-6 text-center"
     >
       <motion.div 

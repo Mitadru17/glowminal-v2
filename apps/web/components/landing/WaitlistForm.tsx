@@ -93,7 +93,7 @@ export function WaitlistForm({ theme = 'light' }: { theme?: 'light' | 'dark' }) 
               <button
                 type="submit"
                 disabled={uiState !== 'idle' && uiState !== 'error'}
-                className={`group relative flex h-[58px] min-w-[140px] items-center justify-center overflow-hidden rounded-2xl px-8 font-medium shadow-sm transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-90 ${
+                className={`group relative flex h-[58px] min-w-[160px] flex-shrink-0 items-center justify-center overflow-hidden rounded-2xl px-8 font-medium shadow-sm transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-90 whitespace-nowrap ${
                   theme === 'dark'
                     ? 'bg-white text-[#011C15]'
                     : 'bg-text-primary text-surface'
@@ -106,10 +106,10 @@ export function WaitlistForm({ theme = 'light' }: { theme?: 'light' | 'dark' }) 
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 whitespace-nowrap"
                     >
-                      <span>Join Waitlist</span>
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      <span className="whitespace-nowrap">Join Waitlist</span>
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 flex-shrink-0" />
                     </motion.div>
                   ) : (
                     <motion.div
