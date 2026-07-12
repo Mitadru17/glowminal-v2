@@ -2,8 +2,7 @@ import { Hero } from '@/components/landing/Hero/Hero'
 import dynamic from 'next/dynamic'
 
 const FeatureNarrative = dynamic(
-  () => import('@/components/landing/FeatureNarrative').then(mod => mod.FeatureNarrative),
-  { ssr: false }
+  () => import('@/components/landing/FeatureNarrative').then(mod => mod.FeatureNarrative)
 )
 
 export default function MarketingPage() {
