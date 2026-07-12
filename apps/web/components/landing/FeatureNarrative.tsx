@@ -391,6 +391,7 @@ export function FeatureNarrative() {
                   src={chapter.imageSrc} 
                   alt={chapter.imageAlt}
                   fill
+                  priority={i < 2}
                   sizes="100vw"
                   className="object-cover"
                   style={{ filter: 'saturate(85%) contrast(110%) brightness(95%) sepia(10%) hue-rotate(-5deg)' }}

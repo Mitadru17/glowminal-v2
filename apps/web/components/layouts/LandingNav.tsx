@@ -142,7 +142,7 @@ export function LandingNav() {
           animate={{
             backgroundColor: mobileMenuOpen ? "rgba(250, 250, 249, 0.95)" : activeTheme.background,
             backdropFilter: activeTheme.backdropFilter,
-            borderColor: mobileMenuOpen ? "transparent" : activeTheme.borderColor,
+            borderColor: mobileMenuOpen ? "rgba(0, 0, 0, 0)" : activeTheme.borderColor,
             boxShadow: activeTheme.boxShadow,
             color: mobileMenuOpen ? "#1C1917" : activeTheme.color
           }}

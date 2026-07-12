@@ -28,7 +28,7 @@ export function LandingFooter() {
       {/* 
         THE CONCLUSION (Emotional Payoff)
       */}
-      <section className="relative flex-1 bg-surface-dark text-white overflow-hidden py-32 flex flex-col items-center justify-center">
+      <section id="waitlist-footer" className="relative flex-1 bg-surface-dark text-white overflow-hidden py-32 flex flex-col items-center justify-center">
         {/* Soft Emerald Bounce Light */}
         <div className="absolute top-0 left-0 right-0 h-[1000px] bg-[radial-gradient(ellipse_at_top_center,rgba(4,120,87,0.15),transparent_70%)] pointer-events-none" />
         <div className="absolute top-0 left-0 right-0 h-96 bg-gradient-to-b from-[#033c2f]/40 to-transparent pointer-events-none mix-blend-overlay" />
@@ -79,7 +79,7 @@ export function LandingFooter() {
             viewport={{ once: true, margin: '100px' }}
             className="w-full max-w-md flex flex-col items-center"
           >
-            <div id="waitlist-footer" className="w-full">
+            <div className="w-full">
               <WaitlistForm theme="dark" />
             </div>
             <div className="mt-6 flex flex-col items-center text-center space-y-2 opacity-80">
