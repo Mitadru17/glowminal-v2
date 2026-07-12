@@ -68,7 +68,7 @@ export function LandingFooter() {
         letter-spacing: 0.02em;
       }
     `}} />
-    <footer ref={ref} className="relative bg-[#022C22] text-white min-h-screen flex flex-col overflow-hidden selection:bg-accent-lime/30 selection:text-white">
+    <footer ref={ref} className="relative bg-primary-dark text-white min-h-screen flex flex-col overflow-hidden selection:bg-accent-lime/30 selection:text-white">
       
       {/* Background Pattern - Large minimal circles mimicking the reference */}
       <div className="absolute inset-0 opacity-20 pointer-events-none overflow-hidden mix-blend-screen">
@@ -80,9 +80,6 @@ export function LandingFooter() {
         <div className="absolute top-[-20%] left-[20%] w-[80vw] h-[80vw] rounded-full bg-[radial-gradient(circle,rgba(4,120,87,0.15)_0%,transparent_70%)]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-[radial-gradient(circle,rgba(217,249,157,0.05)_0%,transparent_70%)]" />
       </div>
-
-      {/* Seamless Top Blend */}
-      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-background to-transparent z-10 opacity-30 pointer-events-none" />
 
       {/* Upper Section - Hero Area */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 pt-32 pb-16 relative z-10">
