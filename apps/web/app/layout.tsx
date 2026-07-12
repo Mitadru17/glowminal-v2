@@ -80,7 +80,7 @@ interface RootLayoutProps {
  */
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${inter.variable} ${newsreader.variable} ${jost.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${newsreader.variable} ${jost.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className="overflow-x-hidden antialiased">
         <SmoothScrollProvider>
           <QueryProvider>
