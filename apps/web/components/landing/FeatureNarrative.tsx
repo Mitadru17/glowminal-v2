@@ -382,8 +382,6 @@ export function FeatureNarrative() {
           </div>
 
         {CHAPTERS.map((chapter, i) => {
-          const isDark = i === 3;
-
           return (
             <motion.div 
               key={chapter.index}
@@ -391,11 +389,14 @@ export function FeatureNarrative() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className={`flex flex-col w-full rounded-[2rem] overflow-hidden shadow-xl border backdrop-blur-2xl transition-all duration-700 ${
-                isDark 
-                  ? "bg-black/20 border-white/10 text-white" 
-                  : "bg-white/50 border-white/50 text-text-primary"
-              }`}
+              style={{
+                '--card-muted': useTransform(smoothProgress, [0, 0.7, 0.85, 1], ["rgba(28,25,23,0.6)", "rgba(28,25,23,0.6)", "rgba(255,255,255,0.6)", "rgba(255,255,255,0.6)"]),
+                '--card-border': useTransform(smoothProgress, [0, 0.7, 0.85, 1], ["rgba(4,120,87,0.2)", "rgba(4,120,87,0.2)", "rgba(255,255,255,0.2)", "rgba(255,255,255,0.2)"]),
+                backgroundColor: useTransform(smoothProgress, [0, 0.7, 0.85, 1], ["rgba(255,255,255,0.1)", "rgba(255,255,255,0.1)", "rgba(0,0,0,0.15)", "rgba(0,0,0,0.15)"]),
+                borderColor: useTransform(smoothProgress, [0, 0.7, 0.85, 1], ["rgba(0,0,0,0.05)", "rgba(0,0,0,0.05)", "rgba(255,255,255,0.1)", "rgba(255,255,255,0.1)"]),
+                color: useTransform(smoothProgress, [0, 0.7, 0.85, 1], ["#1C1917", "#1C1917", "#FFFFFF", "#FFFFFF"]),
+              } as any}
+              className="flex flex-col w-full rounded-[2rem] overflow-hidden shadow-xl border backdrop-blur-2xl transition-all duration-700"
             >
               
               {/* Image Section (Always Top) */}
@@ -417,9 +418,8 @@ export function FeatureNarrative() {
               {/* Text Section (Always Bottom) */}
               <div className="flex flex-col p-8 sm:p-10">
                 <div 
-                  className={`font-mono text-[10px] uppercase tracking-mono flex items-center gap-3 mb-6 ${
-                    isDark ? "text-white/60" : "text-text-secondary"
-                  }`}
+                  className="font-mono text-[10px] uppercase tracking-mono flex items-center gap-3 mb-6"
+                  style={{ color: 'var(--card-muted)' }}
                 >
                   <span className="opacity-60">{chapter.index}</span>
                   <span className="h-px w-8 bg-current opacity-20"></span>
@@ -433,15 +433,21 @@ export function FeatureNarrative() {
                   {chapter.title}
                 </h2>
                 
-                <p className={`text-base font-light leading-relaxed mb-8 ${isDark ? "text-white/80" : "text-text-secondary"}`}>
+                <p 
+                  className="text-base font-light leading-relaxed mb-8"
+                  style={{ color: 'var(--card-muted)' }}
+                >
                   {chapter.description}
                 </p>
 
-                <div className={`space-y-3 pl-4 mb-8 border-l ${isDark ? "border-white/20" : "border-primary/20"}`}>
+                <div 
+                  className="space-y-3 pl-4 mb-8 border-l"
+                  style={{ borderColor: 'var(--card-border)' }}
+                >
                   {chapter.capabilities.map((cap, j) => (
                     <div key={j} className="flex items-center gap-3">
                       <div className="w-1 h-1 rounded-full bg-primary/50" />
-                      <span className={`text-sm font-light tracking-wide ${isDark ? "text-white/90" : "text-text-primary"}`}>
+                      <span className="text-sm font-light tracking-wide">
                         {cap}
                       </span>
                     </div>
@@ -450,19 +456,25 @@ export function FeatureNarrative() {
 
                 <div className="flex items-center gap-6 mt-auto pt-4">
                   <div className="flex flex-col gap-1">
-                    <span className={`font-mono text-[8px] uppercase tracking-mono opacity-50 ${isDark ? "text-white" : "text-text-secondary"}`}>
+                    <span 
+                      className="font-mono text-[8px] uppercase tracking-mono"
+                      style={{ color: 'var(--card-muted)' }}
+                    >
                       Status
                     </span>
-                    <span className={`font-mono text-[10px] uppercase tracking-mono flex items-center gap-2 ${isDark ? "text-white" : "text-text-primary"}`}>
+                    <span className="font-mono text-[10px] uppercase tracking-mono flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-accent-lime animate-pulse" />
                       {chapter.status}
                     </span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <span className={`font-mono text-[8px] uppercase tracking-mono opacity-50 ${isDark ? "text-white" : "text-text-secondary"}`}>
+                    <span 
+                      className="font-mono text-[8px] uppercase tracking-mono"
+                      style={{ color: 'var(--card-muted)' }}
+                    >
                       Read Time
                     </span>
-                    <span className={`font-mono text-[10px] uppercase tracking-mono ${isDark ? "text-white" : "text-text-primary"}`}>
+                    <span className="font-mono text-[10px] uppercase tracking-mono">
                       {chapter.readingTime}
                     </span>
                   </div>
