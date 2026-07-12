@@ -53,11 +53,9 @@ const FAQS = [
   }
 ]
 
-const COMMUNITY_LINKS = [
-  { name: 'X', icon: Share2 },
-  { name: 'GitHub', icon: Globe },
-  { name: 'Discord', icon: MessageSquare },
-  { name: 'Newsletter', icon: Newspaper },
+const SOCIAL_LINKS = [
+  { name: 'Instagram', url: 'https://www.instagram.com/glowminal.tech/' },
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/company/glowminal.tech' },
 ]
 
 export function ContactClient() {
@@ -213,24 +211,16 @@ export function ContactClient() {
                 href={getMailto('founders@glowminal.tech')}
                 className="flex w-full items-center justify-center rounded-xl bg-text-primary px-6 py-3.5 text-sm font-medium text-surface shadow-sm transition-all hover:opacity-90 hover:shadow-md active:scale-[0.98]"
               >
-                Contact Founders
+                Email Founders
                 <ArrowRight className="ml-2 h-4 w-4" />
               </a>
-              <div className="flex gap-3">
-                <button 
-                  onClick={() => handleCopy('founders@glowminal.tech')}
-                  className="flex flex-1 items-center justify-center rounded-xl bg-surface px-4 py-3.5 text-sm font-medium text-text-primary border border-divider transition-colors hover:bg-surface-hover active:scale-[0.98]"
-                >
-                  <Copy className="h-4 w-4" />
-                </button>
-                <button 
-                  disabled
-                  className="flex flex-[3] items-center justify-center rounded-xl bg-surface px-4 py-3.5 text-sm font-medium text-text-secondary border border-divider opacity-50 cursor-not-allowed"
-                >
-                  <Calendar className="mr-2 h-4 w-4" />
-                  Schedule Meeting
-                </button>
-              </div>
+              <button 
+                onClick={() => handleCopy('founders@glowminal.tech')}
+                className="flex w-full items-center justify-center rounded-xl bg-surface px-6 py-3.5 text-sm font-medium text-text-primary border border-divider transition-colors hover:bg-surface-hover active:scale-[0.98]"
+              >
+                <Copy className="mr-2 h-4 w-4 text-text-secondary" />
+                Copy Address
+              </button>
             </div>
           </motion.div>
 
@@ -298,7 +288,7 @@ export function ContactClient() {
           </Accordion>
         </motion.div>
 
-        {/* 6. Community (Coming Soon) */}
+        {/* 6. Socials */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -306,16 +296,19 @@ export function ContactClient() {
           transition={{ duration: DURATION.hero, ease: EASING.expensive }}
           className="text-center"
         >
-          <h3 className="text-sm font-medium tracking-wide text-text-secondary uppercase mb-8">Community • Coming Soon</h3>
+          <h3 className="text-sm font-medium tracking-wide text-text-secondary uppercase mb-8">Follow Our Journey</h3>
           <div className="flex flex-wrap justify-center gap-4">
-            {COMMUNITY_LINKS.map((link) => (
-              <div 
+            {SOCIAL_LINKS.map((link) => (
+              <a 
                 key={link.name}
-                className="flex items-center gap-2 rounded-full border border-divider bg-surface px-5 py-2.5 text-sm font-medium text-text-secondary opacity-60 grayscale cursor-not-allowed transition-all"
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 rounded-full border border-divider bg-surface px-5 py-2.5 text-sm font-medium text-text-secondary hover:text-text-primary hover:border-primary/30 transition-all active:scale-[0.98]"
               >
-                <link.icon className="h-4 w-4" />
                 {link.name}
-              </div>
+                <ArrowRight className="h-3 w-3 -rotate-45 opacity-50" />
+              </a>
             ))}
           </div>
         </motion.div>

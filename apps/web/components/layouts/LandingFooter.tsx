@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { Sparkles, ArrowUp, ArrowRight, Shield } from 'lucide-react'
 import { motion, useInView } from 'framer-motion'
@@ -91,7 +91,7 @@ export function LandingFooter() {
 
           <div className="w-full h-px bg-white/10 mb-16 md:mb-20" />
 
-          {/* 3. Navigation & 4. Contact Info */}
+          {/* 3. Navigation & Socials */}
           <div className="flex flex-col md:flex-row justify-between gap-16 md:gap-24 w-full mb-20 md:mb-24 text-left">
             
             {/* Navigation Grid */}
@@ -112,12 +112,32 @@ export function LandingFooter() {
               </div>
             </div>
 
-            {/* Contact Information */}
+            {/* Social Links */}
             <div className="flex flex-col gap-6 md:min-w-[240px]">
-              <span className="text-[10px] uppercase tracking-widest text-white/30 font-mono">Connect</span>
+              <span className="text-[10px] uppercase tracking-widest text-white/30 font-mono">Socials</span>
               <div className="flex flex-col gap-4">
-                <CopyableEmail email="hello@glowminal.tech" />
-                <CopyableEmail email="founders@glowminal.tech" />
+                <a 
+                  href="https://www.instagram.com/glowminal.tech/" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 py-2 text-left focus-visible:outline-none w-full border-b border-white/5 hover:border-white/20 pb-3 transition-colors touch-manipulation group"
+                >
+                  <span className="text-sm font-light tracking-wide text-white/70 group-hover:text-white transition-colors">
+                    Instagram
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-white/30 group-hover:text-white/70 transition-colors -rotate-45" />
+                </a>
+                <a 
+                  href="https://www.linkedin.com/company/glowminal.tech" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 py-2 text-left focus-visible:outline-none w-full border-b border-white/5 hover:border-white/20 pb-3 transition-colors touch-manipulation group"
+                >
+                  <span className="text-sm font-light tracking-wide text-white/70 group-hover:text-white transition-colors">
+                    LinkedIn
+                  </span>
+                  <ArrowRight className="h-4 w-4 text-white/30 group-hover:text-white/70 transition-colors -rotate-45" />
+                </a>
               </div>
             </div>
           </div>
@@ -156,33 +176,3 @@ export function LandingFooter() {
   )
 }
 
-function CopyableEmail({ email }: { email: string }) {
-  const [copied, setCopied] = useState(false)
-  
-  const handleCopy = () => {
-    navigator.clipboard.writeText(email)
-    setCopied(true)
-    
-    // Create a toast notification
-    const event = new CustomEvent('toast-message', { 
-      detail: { message: `Copied ${email} to clipboard` } 
-    })
-    window.dispatchEvent(event)
-    
-    setTimeout(() => setCopied(false), 2000)
-  }
-  
-  return (
-    <button 
-      onClick={handleCopy}
-      className="group flex items-center justify-between gap-4 py-2 text-left focus-visible:outline-none w-full border-b border-white/5 hover:border-white/20 pb-3 transition-colors touch-manipulation"
-    >
-      <span className="text-sm font-light tracking-wide text-white/70 group-hover:text-white transition-colors">
-        {email}
-      </span>
-      <span className="text-[10px] font-mono text-white/30 group-hover:text-white/70 transition-colors uppercase tracking-widest">
-        {copied ? 'Copied' : 'Copy'}
-      </span>
-    </button>
-  )
-}
