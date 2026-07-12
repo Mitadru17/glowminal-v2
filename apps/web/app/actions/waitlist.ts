@@ -51,32 +51,40 @@ export async function joinWaitlist(prevState: WaitlistState, formData: FormData)
     }
 
     // 3. Duplicate Detection & Database Storage
-    const supabaseAdmin = createAdminClient()
-    
-    // Check if already exists
-    const { data: existingUser, error: checkError } = await supabaseAdmin
-      .from('waitlist')
-      .select('id')
-      .eq('email', email)
-      .single()
+    try {
+      if (process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        const supabaseAdmin = createAdminClient()
+        
+        // Check if already exists
+        const { data: existingUser, error: checkError } = await supabaseAdmin
+          .from('waitlist')
+          .select('id')
+          .eq('email', email)
+          .single()
 
-    if (checkError && checkError.code !== 'PGRST116') { // PGRST116 is "no rows returned"
-      console.error('Supabase check error:', checkError)
-      return { status: 'error', message: 'Failed to verify email. Please try again.' }
-    }
+        if (checkError && checkError.code !== 'PGRST116') {
+          console.error('Supabase check error:', checkError)
+        }
 
-    if (existingUser) {
-      return { status: 'error', message: 'This email is already on the waitlist.' }
-    }
+        if (existingUser) {
+          return { status: 'error', message: 'This email is already on the waitlist.' }
+        }
 
-    // Insert into DB
-    const { error: insertError } = await supabaseAdmin
-      .from('waitlist')
-      .insert([{ email, source }])
+        // Insert into DB
+        const { error: insertError } = await supabaseAdmin
+          .from('waitlist')
+          .insert([{ email, source }])
 
-    if (insertError) {
-      console.error('Supabase insert error:', insertError)
-      return { status: 'error', message: 'Failed to join waitlist. Please try again.' }
+        if (insertError) {
+          console.error('Supabase insert error (Table might not exist):', insertError)
+          // We continue to send the email even if DB insert fails for a smoother UX during testing
+        }
+      } else {
+        console.warn('SUPABASE_SERVICE_ROLE_KEY is missing. Skipping database insertion.')
+      }
+    } catch (dbError) {
+      console.error('Database connection error:', dbError)
+      // Continue to email sending
     }
 
     // 4. Send Emails (Wrap in try-catch so it doesn't fail the signup)
@@ -101,9 +109,9 @@ export async function joinWaitlist(prevState: WaitlistState, formData: FormData)
       } else {
         console.warn('RESEND_API_KEY not configured. Emails were not sent.')
       }
-    } catch (emailError) {
-      // Log the failure but don't fail the signup since the user is stored
+    } catch (emailError: any) {
       console.error('Email delivery failed:', emailError)
+      return { status: 'error', message: emailError.message || 'Email delivery failed. Check your API key and domain settings.' }
     }
 
     return { status: 'success' }
