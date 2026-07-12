@@ -391,10 +391,10 @@ export function FeatureNarrative() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className={`flex flex-col w-full rounded-[2rem] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border ${
+              className={`flex flex-col w-full rounded-[2rem] overflow-hidden shadow-xl border backdrop-blur-2xl transition-all duration-700 ${
                 isDark 
-                  ? "bg-[#022C22] border-white/10 text-white" 
-                  : "bg-surface-elevated border-black/5 text-text-primary"
+                  ? "bg-black/20 border-white/10 text-white" 
+                  : "bg-white/50 border-white/50 text-text-primary"
               }`}
             >
               
@@ -411,6 +411,7 @@ export function FeatureNarrative() {
                 />
                 <div className="absolute inset-0 bg-background/5 backdrop-saturate-[1.05] mix-blend-overlay pointer-events-none" />
                 <div className="absolute inset-0 ring-1 ring-inset ring-black/5 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10 mix-blend-multiply pointer-events-none" />
               </div>
 
               {/* Text Section (Always Bottom) */}
