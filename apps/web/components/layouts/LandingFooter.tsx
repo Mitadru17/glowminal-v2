@@ -31,7 +31,7 @@ const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => (
 const SOCIALS = [
   { name: 'Instagram', icon: InstagramIcon, href: 'https://www.instagram.com/glowminal.tech/' },
   { name: 'LinkedIn', icon: LinkedinIcon, href: 'https://www.linkedin.com/company/glowminal.tech' },
-  { name: 'X', icon: () => <span className="font-bold font-mono text-sm leading-none flex items-center justify-center">X</span>, href: 'https://x.com/glowminal' },
+  { name: 'X', icon: () => <span className="font-bold sip-mono text-sm leading-none flex items-center justify-center">X</span>, href: 'https://x.com/glowminal' },
   { name: 'GitHub', icon: GithubIcon, href: 'https://github.com/glowminal' },
 ]
 
@@ -57,6 +57,18 @@ export function LandingFooter() {
   }
 
   return (
+    <>
+    <style dangerouslySetInnerHTML={{__html: `
+      @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap');
+      .sip-mono {
+        font-family: 'Space Mono', monospace;
+      }
+      .sip-display {
+        font-family: 'Bebas Neue', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+      }
+    `}} />
     <footer ref={ref} className="relative bg-[#022C22] text-white min-h-screen flex flex-col overflow-hidden selection:bg-accent-lime/30 selection:text-white">
       
       {/* Background Pattern - Large minimal circles mimicking the reference */}
@@ -81,7 +93,7 @@ export function LandingFooter() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="font-mono text-xs md:text-sm tracking-[0.3em] text-white/70 mb-12 uppercase"
+          className="sip-mono text-xs md:text-sm tracking-[0.3em] text-white/70 mb-12 uppercase"
         >
           You've reached the bottom
         </motion.p>
@@ -109,19 +121,19 @@ export function LandingFooter() {
             <input
               type="email"
               placeholder="ENTER YOUR EMAIL"
-              className="flex-1 bg-transparent border-b border-white/30 px-2 py-4 font-mono text-sm md:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-white transition-colors tracking-widest"
+              className="flex-1 bg-transparent border-b border-white/30 px-2 py-4 sip-mono text-sm md:text-base text-white placeholder:text-white/40 focus:outline-none focus:border-white transition-colors tracking-widest"
               required
             />
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="px-8 py-4 bg-white text-[#022C22] font-mono font-bold text-sm rounded-full hover:bg-white/90 transition-colors"
+              className="px-8 py-4 bg-white text-[#022C22] sip-mono font-bold text-sm rounded-full hover:bg-white/90 transition-colors"
             >
               JOIN
             </motion.button>
           </form>
-          <div className="flex justify-between mt-4 font-mono text-[10px] text-white/40 tracking-[0.2em] uppercase">
+          <div className="flex justify-between mt-4 sip-mono text-[10px] text-white/40 tracking-[0.2em] uppercase">
             <span>*Phase 1 Rolling Out</span>
             <span>Privacy Guaranteed</span>
           </div>
@@ -142,7 +154,7 @@ export function LandingFooter() {
           >
             {/* Logo Badge */}
             <div className="w-14 h-14 rounded-full border border-white/30 flex items-center justify-center">
-              <span className="font-editorial text-2xl italic">G</span>
+              <span className="sip-display text-3xl">G</span>
             </div>
             
             <p className="text-sm font-light leading-relaxed text-white/70 max-w-xs">
@@ -150,10 +162,10 @@ export function LandingFooter() {
             </p>
             
             <div className="flex gap-3 pt-2">
-              <span className="font-mono text-[10px] px-4 py-1.5 border border-white/20 rounded-full uppercase tracking-wider text-white/60">
+              <span className="sip-mono text-[10px] px-4 py-1.5 border border-white/20 rounded-full uppercase tracking-wider text-white/60">
                 EST. 2026
               </span>
-              <span className="font-mono text-[10px] px-4 py-1.5 border border-white/20 rounded-full uppercase tracking-wider text-white/60">
+              <span className="sip-mono text-[10px] px-4 py-1.5 border border-white/20 rounded-full uppercase tracking-wider text-white/60">
                 GLOBAL
               </span>
             </div>
@@ -166,7 +178,7 @@ export function LandingFooter() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h4 className="font-mono text-xs tracking-widest text-white/40 mb-8 uppercase">
+            <h4 className="sip-mono text-xs tracking-widest text-white/40 mb-8 uppercase">
               Sitemap
             </h4>
             <div className="space-y-5">
@@ -190,7 +202,7 @@ export function LandingFooter() {
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
           >
-            <h4 className="font-mono text-xs tracking-widest text-white/40 mb-8 uppercase">
+            <h4 className="sip-mono text-xs tracking-widest text-white/40 mb-8 uppercase">
               Connect
             </h4>
             <div className="space-y-5">
@@ -224,7 +236,7 @@ export function LandingFooter() {
               whileTap={{ scale: 0.95 }}
               className="flex items-center gap-4 group cursor-pointer"
             >
-              <span className="font-mono text-[11px] tracking-widest text-white/60 group-hover:text-white transition-colors uppercase">
+              <span className="sip-mono text-[11px] tracking-widest text-white/60 group-hover:text-white transition-colors uppercase">
                 Back to Top
               </span>
               <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/40 group-hover:bg-white/5 transition-all">
@@ -236,15 +248,16 @@ export function LandingFooter() {
 
         {/* Bottom Bar */}
         <div className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="font-mono text-[10px] text-white/40 tracking-widest uppercase">
+          <p className="sip-mono text-[10px] text-white/40 tracking-widest uppercase">
             © 2026 GLOWMINAL. ALL RIGHTS RESERVED.
           </p>
-          <div className="flex gap-6 font-mono text-[10px] text-white/40 tracking-widest uppercase">
+          <div className="flex gap-6 sip-mono text-[10px] text-white/40 tracking-widest uppercase">
             <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="/terms" className="hover:text-white transition-colors">Terms of Service</a>
           </div>
         </div>
       </div>
     </footer>
+    </>
   )
 }
