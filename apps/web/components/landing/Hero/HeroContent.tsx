@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'fram
 import { ArrowRight } from 'lucide-react'
 import { SplitTextReveal } from '@/components/shared/SplitTextReveal'
 import { EASING, DURATION } from '@/lib/theme/motion'
+import { toast } from 'sonner'
 
 // Upgraded Magnetic Button (Optimized with useMotionValue)
 const MagneticButton = ({ children, className, onClick }: { children: React.ReactNode, className?: string, onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void }) => {
@@ -100,10 +101,8 @@ export function HeroContent() {
       >
         <MagneticButton 
           onClick={() => {
-            import('sonner').then(({ toast }) => {
-              toast('Coming Soon', {
-                description: 'We are currently in private beta. You can join the waitlist below.',
-              })
+            toast('Coming Soon', {
+              description: 'We are currently in private beta. You can join the waitlist below.',
             })
             document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })
           }} 

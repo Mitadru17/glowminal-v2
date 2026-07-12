@@ -8,6 +8,7 @@ import { Sparkles, Menu, X } from 'lucide-react'
 import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
 import { EASING, DURATION } from '@/lib/theme/motion'
 import { useNavThemeStore, NavTheme } from '@/store/nav-theme'
+import { toast } from 'sonner'
 
 const NAV_LINKS = [
   { href: '/features', label: 'Features' },
@@ -181,9 +182,7 @@ export function LandingNav() {
           <div className="hidden items-center gap-4 shrink-0 md:flex">
             <button 
               onClick={() => {
-                import('sonner').then(({ toast }) => {
-                  toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
-                })
+                toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
                 document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })
               }}
               className="text-sm font-medium opacity-80 hover:opacity-100 transition-opacity px-2 focus-visible:outline-none focus-visible:ring-2 rounded-sm"
@@ -192,9 +191,7 @@ export function LandingNav() {
             </button>
             <button 
               onClick={() => {
-                import('sonner').then(({ toast }) => {
-                  toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
-                })
+                toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
                 document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })
               }}
               className="group relative inline-flex items-center justify-center overflow-hidden rounded-full px-6 py-2.5 text-sm font-medium shadow-sm transition-transform duration-500 ease-expensive hover:scale-[0.98] active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
@@ -276,9 +273,7 @@ export function LandingNav() {
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false)
-                    import('sonner').then(({ toast }) => {
-                      toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
-                    })
+                    toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
                     document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })
                   }}
                   className="text-lg font-medium text-text-secondary hover:text-text-primary transition-colors text-left"
@@ -296,9 +291,7 @@ export function LandingNav() {
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false)
-                    import('sonner').then(({ toast }) => {
-                      toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
-                    })
+                    toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
                     document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })
                   }}
                   className="inline-flex items-center justify-center overflow-hidden rounded-full px-8 py-4 text-base font-medium bg-primary text-white hover:bg-primary-dark transition-colors"
