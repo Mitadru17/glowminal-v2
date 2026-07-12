@@ -352,7 +352,16 @@ export function FeatureNarrative() {
     </div>
 
       {/* MOBILE / PORTRAIT: Premium Stacked Editorial Cards */}
-      <div className="block lg:hidden w-full px-4 sm:px-6 py-24 space-y-8 bg-background">
+      <motion.div 
+        className="block lg:hidden w-full px-4 sm:px-6 py-24 space-y-8 transition-colors duration-1000"
+        style={{
+          backgroundColor: useTransform(
+            smoothProgress,
+            [0, 0.33, 0.66, 0.85, 1],
+            ["#FAFAF9", "#F2F5F3", "#E8F0EA", "#184133", "#022C22"]
+          )
+        }}
+      >
         <div className="text-center mb-16">
           <span className="font-mono text-[10px] uppercase tracking-mono text-primary bg-primary/10 px-3 py-1 rounded-full">
             Glowminal OS Narrative
@@ -449,7 +458,7 @@ export function FeatureNarrative() {
             </motion.div>
           )
         })}
-      </div>
+      </motion.div>
     </div>
   )
 }
