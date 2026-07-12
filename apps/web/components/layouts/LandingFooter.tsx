@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Sparkles, ArrowUp, ArrowRight, Shield } from 'lucide-react'
 import { motion, useInView } from 'framer-motion'
@@ -28,8 +28,8 @@ export function LandingFooter() {
       {/* 
         THE CONCLUSION (Emotional Payoff)
       */}
-      <section id="waitlist-footer" className="relative flex-1 bg-gradient-to-b from-[#022C22] via-[#011C15] to-[#011C15] text-white overflow-hidden py-32 flex flex-col items-center justify-center">
-        {/* Soft Emerald Bounce Light - Adjusted for smoother blending */}
+      <footer id="footer" className="relative w-full flex-1 bg-gradient-to-b from-[#022C22] via-[#011C15] to-[#011C15] text-white overflow-hidden pt-32 pb-[calc(max(3rem,env(safe-area-inset-bottom)))] flex flex-col items-center">
+        {/* Soft Emerald Bounce Light */}
         <div className="absolute top-0 left-0 right-0 h-[800px] bg-[radial-gradient(ellipse_at_top_center,rgba(4,120,87,0.1),transparent_70%)] pointer-events-none mix-blend-screen" />
         
         {/* Seamless Edge Mask at the top to dissolve from the previous section */}
@@ -38,29 +38,23 @@ export function LandingFooter() {
         {/* Atmospheric Grain */}
         <div className="absolute inset-0 opacity-[0.04] mix-blend-screen pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
 
-        <div className="container-marketing relative z-20 flex flex-col items-center text-center px-4 md:px-0 mt-8 md:mt-0">
+        <div className="container-marketing relative z-20 flex flex-col items-center text-center px-6 md:px-0 mt-8 md:mt-0 w-full max-w-5xl">
+          
+          {/* 1. Emotional Hook & Wordmark */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASING.expensive }}
             viewport={{ once: true, margin: '100px' }}
-            className="flex flex-col items-center w-full"
+            className="flex flex-col items-center w-full mb-16 md:mb-20"
           >
             <p className="text-[22px] leading-tight md:text-3xl font-light text-white/80 mb-14 md:mb-16 tracking-editorial max-w-[280px] xs:max-w-sm md:max-w-lg">
               My skin has always been changing.<br/>
               <span className="text-white font-normal italic font-editorial mt-2 block">Now I finally have a way to understand it.</span>
             </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, filter: 'blur(16px)', scale: 0.98 }}
-            whileInView={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
-            transition={{ duration: 1.2, ease: EASING.expensive }}
-            viewport={{ once: true, margin: '100px' }}
-            className="mb-16 md:mb-24 w-full"
-          >
+            
             {/* The Signature */}
-            <h2 className="text-[15vw] xs:text-[14vw] sm:text-[12vw] md:text-[9vw] leading-[0.8] tracking-tight font-light flex items-center justify-center relative select-none">
+            <h2 className="text-[11vw] xs:text-[11vw] sm:text-[9vw] md:text-[8vw] leading-[0.8] tracking-tight font-light flex items-center justify-center relative select-none w-full">
               <ShinyText 
                 color="rgba(255,255,255,0.15)" 
                 shineColor="rgba(255,255,255,0.9)" 
@@ -68,23 +62,24 @@ export function LandingFooter() {
                 className="flex items-center justify-center"
               >
                 <span className="font-[family-name:var(--font-jost)] tracking-[0.1em] font-light uppercase mr-1 md:mr-1 opacity-90">GLOW</span>
-                <span className="font-editorial italic font-light pr-2 md:pr-4 uppercase">MINAL</span>
+                <span className="font-editorial italic font-light pr-1 md:pr-2 uppercase">MINAL</span>
               </ShinyText>
-              <span className="font-editorial italic font-light text-white/20 absolute -right-2 xs:-right-4 md:-right-8 -top-1 md:-top-2 text-lg xs:text-xl md:text-3xl">®</span>
+              <span className="font-editorial italic font-light text-white/20 absolute -right-2 xs:-right-1 md:-right-6 -top-1 md:-top-2 text-lg xs:text-xl md:text-3xl">®</span>
             </h2>
           </motion.div>
 
+          {/* 2. Newsletter CTA */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASING.expensive }}
             viewport={{ once: true, margin: '100px' }}
-            className="w-full max-w-sm md:max-w-md flex flex-col items-center px-4 md:px-0"
+            className="w-full max-w-md flex flex-col items-center mb-24 md:mb-32"
           >
             <div className="w-full">
               <WaitlistForm theme="dark" />
             </div>
-            <div className="mt-8 md:mt-10 flex flex-col items-center text-center space-y-3 opacity-90">
+            <div className="mt-6 md:mt-8 flex flex-col items-center text-center space-y-3 opacity-90">
               <p className="text-white/60 text-[11px] md:text-xs font-light tracking-wide flex items-center justify-center gap-2">
                 <Shield className="w-3.5 h-3.5 opacity-70" /> Phase 1 access is rolling out in limited batches.
               </p>
@@ -93,106 +88,101 @@ export function LandingFooter() {
               </p>
             </div>
           </motion.div>
-          
-        </div>
-      </section>
 
-      {/* 
-        UTILITY FOOTER (Minimal, Elegant, Quiet)
-      */}
-      <motion.footer 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8, ease: EASING.expensive }}
-        viewport={{ once: true }}
-        className="w-full bg-[#011C15] text-white/40 pt-12 pb-[calc(max(3rem,env(safe-area-inset-bottom)))] border-t border-white/5 relative z-10 px-4 md:px-0"
-      >
-        {/* Desktop Utility Footer */}
-        <div className="hidden md:flex container-marketing flex-row justify-between items-center gap-8">
-          
-          <div className="flex items-center gap-4">
-            <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-white/40 hover:text-white/80 transition-colors">
-              <GlowminalLogo variant="symbol" size={16} showTagline={false} />
+          <div className="w-full h-px bg-white/10 mb-16 md:mb-20" />
+
+          {/* 3. Navigation & 4. Contact Info */}
+          <div className="flex flex-col md:flex-row justify-between gap-16 md:gap-24 w-full mb-20 md:mb-24 text-left">
+            
+            {/* Navigation Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-12 md:gap-x-20 gap-y-12">
+              <div className="flex flex-col gap-5">
+                <span className="text-[10px] uppercase tracking-widest text-white/30 font-mono mb-1">Product</span>
+                <Link href="/features" className="text-sm font-light text-white/60 hover:text-white transition-colors active:scale-95 origin-left">Features</Link>
+                <Link href="/info" className="text-sm font-light text-white/60 hover:text-white transition-colors active:scale-95 origin-left">Science</Link>
+                <Link href="/how-it-works" className="text-sm font-light text-white/60 hover:text-white transition-colors active:scale-95 origin-left">How It Works</Link>
+              </div>
+              <div className="flex flex-col gap-5">
+                <span className="text-[10px] uppercase tracking-widest text-white/30 font-mono mb-1">Company</span>
+                <Link href="/about" className="text-sm font-light text-white/60 hover:text-white transition-colors active:scale-95 origin-left">About</Link>
+                <Link href="/contact" className="text-sm font-light text-white/60 hover:text-white transition-colors active:scale-95 origin-left">Contact</Link>
+                <button onClick={() => document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })} className="text-left text-sm font-light text-white/60 hover:text-white transition-colors active:scale-95 origin-left">
+                  Waitlist
+                </button>
+              </div>
             </div>
-            <span className="font-mono text-[10px] uppercase tracking-widest">
-              © {new Date().getFullYear()} Glowminal
-            </span>
+
+            {/* Contact Information */}
+            <div className="flex flex-col gap-6 md:min-w-[240px]">
+              <span className="text-[10px] uppercase tracking-widest text-white/30 font-mono">Connect</span>
+              <div className="flex flex-col gap-4">
+                <CopyableEmail email="hello@glowminal.tech" />
+                <CopyableEmail email="founders@glowminal.tech" />
+              </div>
+            </div>
           </div>
 
-          <nav className="flex flex-wrap gap-8">
-            {[
-              { label: 'Privacy', href: '/privacy' },
-              { label: 'Terms', href: '/terms' },
-              { label: 'Science', href: '/info' },
-              { label: 'Contact', href: '/contact' }
-            ].map((link) => (
-              <Link 
-                key={link.label} 
-                href={link.href}
-                className="font-mono text-[10px] uppercase tracking-widest hover:text-white/80 transition-colors"
+          {/* 5. Legal & Copyright */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8 md:gap-6 pt-8 border-t border-white/5 w-full">
+            
+            <div className="flex items-center gap-3 order-2 md:order-1">
+              <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-white/40 shadow-inner">
+                <GlowminalLogo variant="symbol" size={16} showTagline={false} />
+              </div>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-white/30">
+                © {new Date().getFullYear()} Glowminal
+              </span>
+            </div>
+
+            <div className="flex items-center gap-8 order-1 md:order-2">
+              <Link href="/privacy" className="font-mono text-[10px] uppercase tracking-widest text-white/40 hover:text-white transition-colors">Privacy</Link>
+              <Link href="/terms" className="font-mono text-[10px] uppercase tracking-widest text-white/40 hover:text-white transition-colors">Terms</Link>
+              <button 
+                onClick={scrollToTop} 
+                className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white/40 hover:text-white transition-colors group ml-4 focus-visible:outline-none"
               >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-          
-          <button 
-            onClick={scrollToTop} 
-            className="flex items-center gap-3 group focus-visible:outline-none"
-            aria-label="Scroll to top"
-          >
-            <span className="font-mono text-[10px] uppercase tracking-widest group-hover:text-white/80 transition-colors">
-              Top
-            </span>
-            <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-white/10 transition-colors">
-              <ArrowUp className="w-3 h-3 text-white/40 group-hover:text-white transition-colors" />
+                Top
+                <div className="w-6 h-6 rounded-full border border-white/10 flex items-center justify-center bg-white/5 group-hover:bg-white/10 transition-colors">
+                  <ArrowUp className="w-3 h-3 text-current" />
+                </div>
+              </button>
             </div>
-          </button>
-          
-        </div>
+            
+          </div>
 
-        {/* Mobile Utility Footer */}
-        <div className="flex md:hidden flex-col gap-10 px-2 sm:px-6">
-          <div className="flex justify-between items-center">
-            <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/60 shadow-inner">
-              <GlowminalLogo variant="symbol" size={20} showTagline={false} />
-            </div>
-            <button 
-              onClick={scrollToTop} 
-              className="flex items-center justify-center w-12 h-12 rounded-full border border-white/10 bg-white/5 active:scale-95 touch-manipulation transition-transform shadow-inner"
-              aria-label="Scroll to top"
-            >
-              <ArrowUp className="w-4 h-4 text-white/60" />
-            </button>
-          </div>
-          
-          <nav className="grid grid-cols-2 gap-y-8 gap-x-4">
-            {[
-              { label: 'Privacy', href: '/privacy' },
-              { label: 'Terms', href: '/terms' },
-              { label: 'Science', href: '/info' },
-              { label: 'Contact', href: '/contact' }
-            ].map((link) => (
-              <Link 
-                key={link.label} 
-                href={link.href}
-                className="font-mono text-xs uppercase tracking-widest text-white/60 active:text-white transition-colors touch-manipulation py-2"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-          
-          <div className="pt-8 border-t border-white/10 flex items-center justify-between">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-white/30">
-              © {new Date().getFullYear()} Glowminal
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-widest text-white/30">
-              Beta 1.0
-            </span>
-          </div>
         </div>
-      </motion.footer>
+      </footer>
     </div>
+  )
+}
+
+function CopyableEmail({ email }: { email: string }) {
+  const [copied, setCopied] = useState(false)
+  
+  const handleCopy = () => {
+    navigator.clipboard.writeText(email)
+    setCopied(true)
+    
+    // Create a toast notification
+    const event = new CustomEvent('toast-message', { 
+      detail: { message: `Copied ${email} to clipboard` } 
+    })
+    window.dispatchEvent(event)
+    
+    setTimeout(() => setCopied(false), 2000)
+  }
+  
+  return (
+    <button 
+      onClick={handleCopy}
+      className="group flex items-center justify-between gap-4 py-2 text-left focus-visible:outline-none w-full border-b border-white/5 hover:border-white/20 pb-3 transition-colors touch-manipulation"
+    >
+      <span className="text-sm font-light tracking-wide text-white/70 group-hover:text-white transition-colors">
+        {email}
+      </span>
+      <span className="text-[10px] font-mono text-white/30 group-hover:text-white/70 transition-colors uppercase tracking-widest">
+        {copied ? 'Copied' : 'Copy'}
+      </span>
+    </button>
   )
 }
