@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, m as motion } from "framer-motion"
 import { EASING, DURATION } from '@/lib/theme/motion'
 import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
 import { Copy, Mail, Calendar, ArrowRight, Globe, Share2, MessageSquare, Newspaper, MapPin, Clock } from 'lucide-react'
@@ -10,8 +10,7 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion'
+  AccordionTrigger } from '@/components/ui/accordion'
 
 const TOPICS = [
   'General Support',

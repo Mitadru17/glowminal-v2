@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, m as motion } from "framer-motion"
 import { EASING, DURATION } from '@/lib/theme/motion'
 import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
 import { ArrowRight, Check } from 'lucide-react'

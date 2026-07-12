@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence, m as motion } from "framer-motion"
 import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
 import { useLoadingStore } from '@/store/loading'
 import { EASING, DURATION } from '@/lib/theme/motion'
@@ -74,8 +74,7 @@ export function LoadingScreen() {
           <motion.div 
             animate={{ 
               opacity: [0.3, 0.5, 0.3],
-              scale: [1, 1.05, 1],
-            }}
+              scale: [1, 1.05, 1] }}
             transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
             className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(4,120,87,0.15),transparent_60%)] pointer-events-none"
           />

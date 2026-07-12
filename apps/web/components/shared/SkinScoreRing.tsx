@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { useReducedMotion, m as motion } from "framer-motion"
 import { cn } from '@/lib/utils'
 
 interface SkinScoreRingProps {
@@ -16,8 +16,7 @@ export function SkinScoreRing({
   size = 120,
   strokeWidth = 9,
   className,
-  animate = true,
-}: SkinScoreRingProps) {
+  animate = true }: SkinScoreRingProps) {
   const radius = (size - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
   const targetOffset = circumference * (1 - score / 100)

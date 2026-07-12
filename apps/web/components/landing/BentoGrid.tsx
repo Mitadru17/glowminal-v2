@@ -1,7 +1,7 @@
 'use client'
 
 import { Activity, Sparkle, ScanFace, Droplets } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { m as motion } from "framer-motion"
 import { ScrollReveal } from '@/components/animations/ScrollReveal'
 import Image from 'next/image'
 

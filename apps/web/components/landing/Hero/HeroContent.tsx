@@ -2,7 +2,7 @@
 
 import { useRef, useState, MouseEvent } from 'react'
 import Link from 'next/link'
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion'
+import { useScroll, useTransform, useSpring, useMotionValue, m as motion } from "framer-motion"
 import { ArrowRight } from 'lucide-react'
 import { SplitTextReveal } from '@/components/shared/SplitTextReveal'
 import { EASING, DURATION } from '@/lib/theme/motion'
@@ -102,8 +102,7 @@ export function HeroContent() {
         <MagneticButton 
           onClick={() => {
             toast('Coming Soon', {
-              description: 'We are currently in private beta. You can join the waitlist below.',
-            })
+              description: 'We are currently in private beta. You can join the waitlist below.' })
             document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
           }} 
           className="h-14 md:h-16 w-full md:w-auto px-8 md:px-12 text-[15px] md:text-lg shadow-[0_8px_30px_rgb(0,0,0,0.08)]"

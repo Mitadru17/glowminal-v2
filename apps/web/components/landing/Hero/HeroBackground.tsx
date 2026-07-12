@@ -3,8 +3,10 @@
 import { useEffect, useState } from 'react'
 import { HERO_VIDEOS } from '@/lib/hero-video'
 import { HeroVideoPlayer } from './HeroVideoPlayer'
+import { preload } from 'react-dom'
 
 export function HeroBackground() {
+  preload(HERO_VIDEOS[0]!.poster, { as: 'image', fetchPriority: 'high' })
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   

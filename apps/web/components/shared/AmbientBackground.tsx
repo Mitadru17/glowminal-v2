@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { m as motion } from "framer-motion"
 
 export function AmbientBackground() {
   return (
@@ -9,16 +9,14 @@ export function AmbientBackground() {
       <div 
         className="absolute inset-0 opacity-[0.015] mix-blend-multiply"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-        }}
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}
       />
       
       {/* Ambient moving glow - Optimized for GPU */}
       <motion.div
         animate={{
           x: ['-5%', '5%', '-5%'],
-          y: ['-5%', '5%', '-5%'],
-        }}
+          y: ['-5%', '5%', '-5%'] }}
         transition={{
           duration: 25,
           repeat: Infinity,
@@ -31,8 +29,7 @@ export function AmbientBackground() {
       <motion.div
         animate={{
           x: ['5%', '-5%', '5%'],
-          y: ['5%', '-5%', '5%'],
-        }}
+          y: ['5%', '-5%', '5%'] }}
         transition={{
           duration: 30,
           repeat: Infinity,

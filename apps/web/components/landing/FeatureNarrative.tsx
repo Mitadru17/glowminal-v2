@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useScroll, useTransform, useSpring, useMotionValueEvent } from 'framer-motion'
+import { useScroll, useTransform, useSpring, useMotionValueEvent, m as motion } from "framer-motion"
 import { Activity, Sparkle, ScanFace, Droplets, ArrowRight } from 'lucide-react'
 import { useNavThemeStore } from '@/store/nav-theme'
 import Image from 'next/image'
@@ -394,8 +394,7 @@ export function FeatureNarrative() {
                 '--card-border': useTransform(smoothProgress, [0, 0.7, 0.85, 1], ["rgba(4,120,87,0.2)", "rgba(4,120,87,0.2)", "rgba(255,255,255,0.2)", "rgba(255,255,255,0.2)"]),
                 backgroundColor: useTransform(smoothProgress, [0, 0.7, 0.85, 1], ["rgba(255,255,255,0.1)", "rgba(255,255,255,0.1)", "rgba(0,0,0,0.15)", "rgba(0,0,0,0.15)"]),
                 borderColor: useTransform(smoothProgress, [0, 0.7, 0.85, 1], ["rgba(0,0,0,0.05)", "rgba(0,0,0,0.05)", "rgba(255,255,255,0.1)", "rgba(255,255,255,0.1)"]),
-                color: useTransform(smoothProgress, [0, 0.7, 0.85, 1], ["#1C1917", "#1C1917", "#FFFFFF", "#FFFFFF"]),
-              } as any}
+                color: useTransform(smoothProgress, [0, 0.7, 0.85, 1], ["#1C1917", "#1C1917", "#FFFFFF", "#FFFFFF"]) } as any}
               className="flex flex-col w-full rounded-[2rem] overflow-hidden shadow-xl border backdrop-blur-2xl transition-all duration-700"
             >
               
@@ -405,8 +404,9 @@ export function FeatureNarrative() {
                   src={chapter.imageSrc} 
                   alt={chapter.imageAlt}
                   fill
-                  priority={true}
-                  sizes="100vw"
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover"
                   style={{ filter: 'saturate(85%) contrast(110%) brightness(95%) sepia(10%) hue-rotate(-5deg)' }}
                 />

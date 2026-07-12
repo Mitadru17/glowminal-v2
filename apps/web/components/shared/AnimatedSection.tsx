@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useInView, useReducedMotion } from 'framer-motion'
+import { useInView, useReducedMotion, m as motion } from "framer-motion"
 import { useRef } from 'react'
 import { cn } from '@/lib/utils'
 
@@ -15,8 +15,7 @@ export function AnimatedSection({
   children,
   className,
   delay = 0,
-  once = true,
-}: AnimatedSectionProps) {
+  once = true }: AnimatedSectionProps) {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once, margin: '-80px' })
   const shouldReduceMotion = useReducedMotion()

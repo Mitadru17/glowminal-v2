@@ -1,5 +1,9 @@
 import { Hero } from '@/components/landing/Hero/Hero'
-import { FeatureNarrative } from '@/components/landing/FeatureNarrative'
+import dynamic from 'next/dynamic'
+
+const FeatureNarrative = dynamic(() => import('@/components/landing/FeatureNarrative').then(mod => mod.FeatureNarrative), {
+  ssr: true,
+})
 
 export default function MarketingPage() {
   return (

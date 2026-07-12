@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, Variants } from 'framer-motion'
+import { Variants, m as motion } from "framer-motion"
 import { ReactNode } from 'react'
 
 interface SplitTextRevealProps {
@@ -31,9 +31,7 @@ export function SplitTextReveal({ children, delay = 0, className = '', as: Compo
     hidden: { opacity: 0 },
     visible: (i = 1) => ({
       opacity: 1,
-      transition: { staggerChildren: 0.05, delayChildren: delay * i },
-    }),
-  }
+      transition: { staggerChildren: 0.05, delayChildren: delay * i } }) }
 
   const child: Variants = {
     visible: {
@@ -41,18 +39,13 @@ export function SplitTextReveal({ children, delay = 0, className = '', as: Compo
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
+        ease: [0.22, 1, 0.36, 1] } },
     hidden: {
       opacity: 0,
       y: 20,
       transition: {
         duration: 0.8,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  }
+        ease: [0.22, 1, 0.36, 1] } } }
 
   const MotionComponent = motion.create(Component as any)
 

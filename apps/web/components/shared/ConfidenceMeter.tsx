@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { useReducedMotion, m as motion } from "framer-motion"
 
 interface ConfidenceMeterProps {
   label: string

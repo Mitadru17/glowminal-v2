@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { QueryProvider } from '@/components/providers/QueryProvider'
 import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider'
+import { MotionProvider } from '@/components/providers/MotionProvider'
 import { LoadingScreen } from '@/components/shared/LoadingScreen'
 import './globals.css'
 
@@ -86,11 +87,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <SmoothScrollProvider>
           <QueryProvider>
             <TooltipProvider>
-              <LoadingScreen />
-              {children}
-              <Toaster position="bottom-right" />
+              <MotionProvider>
+                <LoadingScreen />
+                {children}
+                <Toaster position="bottom-right" />
+              </MotionProvider>
             </TooltipProvider>
-        </QueryProvider>
+          </QueryProvider>
         </SmoothScrollProvider>
       </body>
     </html>

@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useInView, Variants } from 'framer-motion'
+import { useInView, Variants, m as motion } from "framer-motion"
 import { useRef, ReactNode } from 'react'
 import { EASING, DURATION } from '@/lib/theme/motion'
 
@@ -21,8 +21,7 @@ export const ScrollReveal = ({
   duration = 0.8,
   direction = 'up',
   distance = 50,
-  once = true,
-}: ScrollRevealProps) => {
+  once = true }: ScrollRevealProps) => {
   const ref = useRef(null)
   const isInView = useInView(ref, { once, margin: '-50px' })
 
@@ -44,8 +43,7 @@ export const ScrollReveal = ({
   const variants: Variants = {
     hidden: {
       opacity: 0,
-      ...getInitialPosition(),
-    },
+      ...getInitialPosition() },
     visible: {
       opacity: 1,
       x: 0,
@@ -53,10 +51,7 @@ export const ScrollReveal = ({
       transition: {
         duration,
         delay,
-        ease: EASING.expensive,
-      },
-    },
-  }
+        ease: EASING.expensive } } }
 
   return (
     <motion.div

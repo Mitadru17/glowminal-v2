@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { m as motion } from "framer-motion"
 import { useRef, useEffect } from 'react'
 import { useInView } from 'framer-motion'
 import { HeroBackground } from './HeroBackground'

@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
+import { m as motion } from "framer-motion"
 
 export type LogoVariant = 'primary' | 'horizontal' | 'vertical' | 'symbol' | 'wordmark' | 'monogram'
 export type LogoTheme = 'light' | 'dark' | 'current'
@@ -24,8 +24,7 @@ export function GlowminalLogo({
   animated = false,
   loading = false,
   showTagline = true,
-  className = '',
-}: GlowminalLogoProps) {
+  className = '' }: GlowminalLogoProps) {
   // Theme resolution
   let themeClass = ''
   if (theme === 'light') themeClass = 'text-white'

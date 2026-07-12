@@ -3,7 +3,7 @@
 import { useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { Sparkles, ArrowUp, ArrowRight, Shield } from 'lucide-react'
-import { motion, useInView } from 'framer-motion'
+import { useInView, m as motion } from "framer-motion"
 import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
 import { EASING, DURATION } from '@/lib/theme/motion'
 import { useNavThemeStore } from '@/store/nav-theme'

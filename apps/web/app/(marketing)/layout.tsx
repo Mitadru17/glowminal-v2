@@ -1,5 +1,9 @@
 import { LandingNav } from '@/components/layouts/LandingNav'
-import { LandingFooter } from '@/components/layouts/LandingFooter'
+import dynamic from 'next/dynamic'
+
+const LandingFooter = dynamic(() => import('@/components/layouts/LandingFooter').then(mod => mod.LandingFooter), {
+  ssr: true,
+})
 import { AmbientBackground } from '@/components/shared/AmbientBackground'
 import { SmoothScroll } from '@/components/shared/SmoothScroll'
 

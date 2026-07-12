@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'framer-motion'
+import { useScroll, useMotionValueEvent, AnimatePresence, m as motion } from "framer-motion"
 import { Sparkles, Menu, X } from 'lucide-react'
 import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
 import { EASING, DURATION } from '@/lib/theme/motion'
@@ -27,8 +27,7 @@ const THEMES: Record<NavTheme, any> = {
     logoIcon: "#FFFFFF",
     ctaBg: "rgba(255, 255, 255, 0.95)",
     ctaText: "#022C22",
-    ctaHover: "#FFFFFF",
-  },
+    ctaHover: "#FFFFFF" },
   editorial: {
     background: "rgba(255, 255, 255, 0.65)", // soft frosted white
     backdropFilter: "blur(24px) saturate(1.4)",
@@ -39,8 +38,7 @@ const THEMES: Record<NavTheme, any> = {
     logoIcon: "#FFFFFF",
     ctaBg: "#1C1917",
     ctaText: "#FFFFFF",
-    ctaHover: "#2E3A23",
-  },
+    ctaHover: "#2E3A23" },
   scientific: {
     background: "rgba(255, 255, 255, 0.75)", // soft frosted white
     backdropFilter: "blur(24px) saturate(1.2)",
@@ -51,8 +49,7 @@ const THEMES: Record<NavTheme, any> = {
     logoIcon: "#FFFFFF",
     ctaBg: "#1C1917",
     ctaText: "#FFFFFF",
-    ctaHover: "#2E3A23",
-  },
+    ctaHover: "#2E3A23" },
   botanical: {
     background: "rgba(4, 120, 87, 0.4)", // mid emerald translucent
     backdropFilter: "blur(32px) saturate(1.5)",
@@ -63,8 +60,7 @@ const THEMES: Record<NavTheme, any> = {
     logoIcon: "#FFFFFF",
     ctaBg: "rgba(255, 255, 255, 0.95)",
     ctaText: "#047857",
-    ctaHover: "#FFFFFF",
-  },
+    ctaHover: "#FFFFFF" },
   footer: {
     background: "rgba(2, 44, 34, 0.6)", // deep emerald glass
     backdropFilter: "blur(48px) saturate(1.2)",
@@ -75,8 +71,7 @@ const THEMES: Record<NavTheme, any> = {
     logoIcon: "#FFFFFF",
     ctaBg: "var(--color-primary)",
     ctaText: "#FFFFFF",
-    ctaHover: "rgba(16, 185, 129, 1)",
-  }
+    ctaHover: "rgba(16, 185, 129, 1)" }
 }
 
 export function LandingNav() {
@@ -130,8 +125,7 @@ export function LandingNav() {
       <motion.header
         variants={{
           visible: { y: 0, opacity: 1 },
-          hidden: { y: '-100%', opacity: 0 },
-        }}
+          hidden: { y: '-100%', opacity: 0 } }}
         initial="visible"
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: DURATION.hero, ease: EASING.expensive }}
