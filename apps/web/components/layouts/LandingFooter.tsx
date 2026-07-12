@@ -103,9 +103,9 @@ export function LandingFooter() {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8, ease: EASING.expensive }}
         viewport={{ once: true }}
-        className="w-full bg-[#011C15] text-white/40 py-12 border-t border-white/5 relative z-10"
+        className="w-full bg-[#011C15] text-white/40 pt-12 pb-[calc(max(3rem,env(safe-area-inset-bottom)))] border-t border-white/5 relative z-10 px-4 md:px-0"
       >
-        <div className="container-marketing flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+        <div className="container-marketing flex flex-col md:flex-row justify-between items-start md:items-center gap-10 md:gap-8">
           
           <div className="flex items-center gap-4">
             <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center text-white/40 hover:text-white/80 transition-colors">

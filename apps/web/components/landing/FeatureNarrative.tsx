@@ -135,13 +135,13 @@ export function FeatureNarrative() {
         />
 
         {/* Main Layout Container */}
-        <div className="relative z-10 w-full max-w-[1600px] mx-auto px-6 lg:px-12 h-full flex flex-col lg:flex-row items-center gap-12 lg:gap-24 pt-24 pb-12 lg:py-0">
+        <div className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 h-full flex flex-col-reverse lg:flex-row items-center gap-6 lg:gap-24 pt-[80px] sm:pt-[100px] lg:pt-0 pb-6 lg:pb-0">
           
-          {/* LEFT: Feature Information */}
-          <div className="w-full lg:w-5/12 flex flex-col justify-center h-full relative">
+          {/* LEFT/BOTTOM: Feature Information */}
+          <div className="w-full lg:w-5/12 h-[55%] lg:h-full flex flex-col justify-start lg:justify-center relative z-20">
             
             {/* Scroll Progress Indicator */}
-            <div className="absolute top-12 left-0 flex items-center gap-6">
+            <div className="absolute top-0 lg:top-12 left-0 flex items-center gap-4 lg:gap-6">
               <div className="flex gap-2">
                 {[0, 1, 2, 3].map((i) => {
                   return (
@@ -179,7 +179,7 @@ export function FeatureNarrative() {
             </div>
 
             {/* Chapters Content */}
-            <div className="relative w-full">
+            <div className="relative w-full h-full mt-12 lg:mt-0">
               {CHAPTERS.map((chapter, i) => {
                 // Determine opacity mapping for crossfading
                 const start = (i - 0.5) * 0.33
@@ -204,7 +204,7 @@ export function FeatureNarrative() {
                     }}
                   >
                     <motion.div 
-                      className="font-mono text-[10px] uppercase tracking-mono flex items-center gap-4 mb-8"
+                      className="font-mono text-[10px] uppercase tracking-mono flex items-center gap-3 lg:gap-4 mb-4 lg:mb-8"
                       style={{ 
                         color: isDark ? "rgba(255,255,255,0.6)" : "var(--color-text-secondary)",
                         y: useTransform(smoothProgress, [start, peak, end], [30, 0, -30])
@@ -219,7 +219,7 @@ export function FeatureNarrative() {
                     </motion.div>
                     
                     <motion.h2 
-                      className="text-5xl sm:text-6xl lg:text-[5rem] font-light tracking-tight leading-[1] mb-8"
+                      className="text-[8.5vw] xs:text-4xl sm:text-5xl lg:text-[5rem] font-light tracking-tight leading-[1] mb-4 lg:mb-8"
                       style={{ 
                         color: isDark ? "#FFFFFF" : "var(--color-text-primary)",
                         opacity: useTransform(smoothProgress, [startTitle, peak, end], [0, 1, 0]),
@@ -230,7 +230,7 @@ export function FeatureNarrative() {
                     </motion.h2>
                     
                     <motion.p 
-                      className="text-lg lg:text-xl font-light leading-relaxed max-w-md mb-12"
+                      className="text-sm xs:text-base lg:text-xl font-light leading-relaxed max-w-md mb-6 lg:mb-12"
                       style={{ 
                         color: isDark ? "rgba(255,255,255,0.8)" : "var(--color-text-secondary)",
                         opacity: useTransform(smoothProgress, [startDesc, peak, end], [0, 1, 0]),
@@ -242,7 +242,7 @@ export function FeatureNarrative() {
 
                     {/* Micro Capabilities & Meta */}
                     <motion.div 
-                      className="flex flex-col gap-8"
+                      className="flex flex-col gap-4 lg:gap-8 hidden xs:flex"
                       style={{ 
                         opacity: useTransform(smoothProgress, [startCaps, peak, end], [0, 1, 0]),
                         y: useTransform(smoothProgress, [startCaps, peak, end], [40, 0, -40])
@@ -301,10 +301,10 @@ export function FeatureNarrative() {
             </div>
           </div>
 
-          {/* RIGHT: Campaign Artwork (Museum Framed) */}
-          <div className="w-full lg:w-7/12 h-[50vh] lg:h-[80vh] relative mt-auto lg:mt-0 pb-12 lg:pb-0 flex items-center justify-center">
+          {/* RIGHT/TOP: Campaign Artwork (Museum Framed) */}
+          <div className="w-full lg:w-7/12 h-[45%] lg:h-[80vh] relative flex items-center justify-center pt-2 lg:pt-0">
             
-            <div className="relative w-full h-full max-h-[800px] rounded-[2rem] bg-white/10 shadow-[0_30px_100px_rgba(0,0,0,0.05)] overflow-hidden border border-white/20 ring-1 ring-black/5 backdrop-blur-2xl">
+            <div className="relative w-full h-full max-h-[800px] rounded-3xl lg:rounded-[2rem] bg-white/10 shadow-[0_30px_100px_rgba(0,0,0,0.05)] overflow-hidden border border-white/20 ring-1 ring-black/5 backdrop-blur-2xl">
               {CHAPTERS.map((chapter, i) => {
                 const start = (i - 0.5) * 0.33
                 const peak = i * 0.33
@@ -313,7 +313,7 @@ export function FeatureNarrative() {
                 return (
                   <motion.div
                     key={chapter.index}
-                    className="absolute inset-4 md:inset-6 rounded-card overflow-hidden bg-background shadow-inner"
+                    className="absolute inset-2 sm:inset-4 lg:inset-6 rounded-2xl lg:rounded-card overflow-hidden bg-background shadow-inner"
                     style={{
                       opacity: useTransform(smoothProgress, [start, peak, end], [0, 1, 0]),
                       scale: useTransform(smoothProgress, [start, peak, end], [0.95, 1, 1.05]),

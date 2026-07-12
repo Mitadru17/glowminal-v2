@@ -111,6 +111,16 @@ export function LandingNav() {
     setMobileMenuOpen(false)
   }, [pathname])
 
+  // Body scroll lock for fullscreen menu
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [mobileMenuOpen])
+
   if (!mounted) return null
 
   const activeTheme = THEMES[themeKey]
@@ -125,7 +135,7 @@ export function LandingNav() {
         initial="visible"
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: DURATION.hero, ease: EASING.expensive }}
-        className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4"
+        className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-[calc(max(1.5rem,env(safe-area-inset-top)))] px-4"
       >
         <motion.nav
           initial={false}
@@ -242,7 +252,7 @@ export function LandingNav() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.98 }}
             transition={{ duration: 0.5, ease: EASING.expensive }}
-            className="fixed inset-0 z-40 bg-background/90 backdrop-blur-2xl flex flex-col justify-center px-8"
+            className="fixed inset-0 z-40 bg-background/95 backdrop-blur-3xl flex flex-col justify-center px-8 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]"
           >
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(4,120,87,0.05),transparent_70%)] pointer-events-none" />
             
@@ -256,7 +266,8 @@ export function LandingNav() {
                 >
                   <Link
                     href={link.href}
-                    className="flex items-center gap-4 text-text-primary hover:text-primary transition-colors"
+                    className="flex items-center gap-4 text-text-primary hover:text-primary transition-colors py-2 active:scale-95 origin-left touch-manipulation"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {link.label}
                   </Link>
@@ -276,7 +287,7 @@ export function LandingNav() {
                     toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
                     document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })
                   }}
-                  className="text-lg font-medium text-text-secondary hover:text-text-primary transition-colors text-left"
+                  className="text-xl font-medium text-text-secondary hover:text-text-primary transition-colors text-left py-2 active:scale-95 origin-left touch-manipulation"
                 >
                   Sign In
                 </button>
@@ -294,7 +305,7 @@ export function LandingNav() {
                     toast('Coming Soon', { description: 'We are currently in private beta. You can join the waitlist below.' })
                     document.getElementById('waitlist-footer')?.scrollIntoView({ behavior: 'smooth' })
                   }}
-                  className="inline-flex items-center justify-center overflow-hidden rounded-full px-8 py-4 text-base font-medium bg-primary text-white hover:bg-primary-dark transition-colors"
+                  className="w-full inline-flex items-center justify-center overflow-hidden rounded-full px-8 py-5 text-lg font-medium bg-primary text-white hover:bg-primary-dark transition-transform active:scale-[0.98] touch-manipulation"
                 >
                   Start Free Scan
                 </button>

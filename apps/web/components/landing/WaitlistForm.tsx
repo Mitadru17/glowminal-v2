@@ -84,7 +84,11 @@ export function WaitlistForm({ theme = 'light' }: { theme?: 'light' | 'dark' }) 
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={uiState !== 'idle' && uiState !== 'error'}
                 required
-                className={`w-full rounded-2xl border px-6 py-4 placeholder:text-text-secondary focus:outline-none focus:ring-1 focus:ring-primary disabled:opacity-50 transition-all duration-300 ${
+                autoComplete="email"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck="false"
+                className={`w-full rounded-2xl border px-6 py-4 text-base placeholder:text-text-secondary focus:outline-none focus:ring-1 focus:ring-primary disabled:opacity-50 transition-all duration-300 ${
                   theme === 'dark'
                     ? 'bg-white/[0.03] border-white/10 text-white placeholder-white/30 focus:border-primary focus:bg-white/[0.08]'
                     : 'bg-surface border-divider text-text-primary focus:border-primary'
@@ -93,7 +97,7 @@ export function WaitlistForm({ theme = 'light' }: { theme?: 'light' | 'dark' }) 
               <button
                 type="submit"
                 disabled={uiState !== 'idle' && uiState !== 'error'}
-                className={`group relative flex h-[58px] min-w-[160px] flex-shrink-0 items-center justify-center overflow-hidden rounded-2xl px-8 font-medium shadow-sm transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-90 whitespace-nowrap ${
+                className={`group relative flex h-[58px] min-w-[160px] flex-shrink-0 items-center justify-center overflow-hidden rounded-2xl px-8 font-medium shadow-sm transition-all hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-90 whitespace-nowrap active:scale-[0.98] touch-manipulation ${
                   theme === 'dark'
                     ? 'bg-white text-[#011C15]'
                     : 'bg-text-primary text-surface'
