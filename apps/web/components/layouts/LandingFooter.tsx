@@ -4,7 +4,6 @@ import { useRef, useEffect } from 'react'
 import { m as motion, useInView } from "framer-motion"
 import { ArrowUp, Check } from 'lucide-react'
 import { useNavThemeStore } from '@/store/nav-theme'
-import { FooterLogoReveal } from '@/components/ui/FooterLogoReveal'
 
 const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -98,16 +97,16 @@ export function LandingFooter() {
           You've reached the bottom
         </motion.p>
 
-        {/* Large Title / Logo Reveal */}
-        <motion.div
+        {/* Large Title */}
+        <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
           viewport={{ once: true }}
-          className="mb-20 w-full flex justify-center"
+          className="sip-display text-[18vw] md:text-[14vw] lg:text-[12vw] leading-[0.9] text-white text-center mb-16 tracking-wide"
         >
-          <FooterLogoReveal className="scale-110 md:scale-125 lg:scale-150 transform origin-center" />
-        </motion.div>
+          GLOWMINAL
+        </motion.h2>
 
         {/* Email Signup - Recreated exactly like reference */}
         <motion.div
