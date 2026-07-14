@@ -2,15 +2,16 @@
 
 import { useRef, useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
-import { m as motion, useInView, useReducedMotion, AnimatePresence } from 'framer-motion'
+import { m as motion, useInView } from 'framer-motion'
 import { ArrowRight, Check, Copy } from 'lucide-react'
-import { EASING, DURATION } from '@/lib/theme/motion'
+import { EASING } from '@/lib/theme/motion'
 import { useNavThemeStore } from '@/store/nav-theme'
-import { WaitlistForm } from '@/components/landing/WaitlistForm'
+import { GlowminalLogo } from '@/components/ui/GlowminalLogo'
+import { joinWaitlist } from '@/app/actions/waitlist'
 import { toast } from 'sonner'
 
 // ─────────────────────────────────────────────────────────────
-// SOCIAL ICONS (inline SVG — zero dependency)
+// SOCIAL ICONS
 // ─────────────────────────────────────────────────────────────
 
 const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -42,181 +43,63 @@ const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
 )
 
 // ─────────────────────────────────────────────────────────────
-// DATA
+// INLINE FOOTER EMAIL FORM (matches Daylight reference exactly)
 // ─────────────────────────────────────────────────────────────
 
-const SOCIALS = [
-  { name: 'Instagram', icon: InstagramIcon, href: 'https://www.instagram.com/glowminal.tech/' },
-  { name: 'LinkedIn', icon: LinkedinIcon, href: 'https://www.linkedin.com/company/glowminal.tech' },
-  { name: 'GitHub', icon: GithubIcon, href: 'https://github.com/glowminal' },
-  { name: 'X', icon: XIcon, href: 'https://x.com/glowminal' },
-]
+function FooterEmailForm() {
+  const [email, setEmail] = useState('')
+  const [state, setState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
-const NAV_LEFT = [
-  { name: 'Features', href: '/features' },
-  { name: 'Science', href: '/science' },
-  { name: 'Technology', href: '/technology' },
-  { name: 'About', href: '/about' },
-  { name: 'Waitlist', href: '#waitlist' },
-]
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email || state === 'loading') return
 
-const NAV_RIGHT = [
-  { name: 'Resources', href: '/resources' },
-  { name: 'Contact', href: '/contact' },
-  { name: 'Privacy', href: '/privacy' },
-  { name: 'Terms', href: '/terms' },
-]
+    setState('loading')
+    const hp = (document.getElementById('footer-hp') as HTMLInputElement)?.value
+    const result = await joinWaitlist({ email, source: 'footer', hp })
 
-// ─────────────────────────────────────────────────────────────
-// STAGGER CHILDREN
-// ─────────────────────────────────────────────────────────────
-
-const staggerContainer = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.06,
-      delayChildren: 0.15,
-    },
-  },
-}
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: DURATION.hero, ease: EASING.expensive },
-  },
-}
-
-// ─────────────────────────────────────────────────────────────
-// FOOTER NAV LINK
-// ─────────────────────────────────────────────────────────────
-
-function FooterNavLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <motion.li variants={fadeUp}>
-      <Link
-        href={href}
-        className="group relative inline-block text-[15px] text-white/60 hover:text-white transition-colors duration-300"
-      >
-        <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1 inline-block">
-          {children}
-        </span>
-        <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-white/30 transition-all duration-300 ease-out group-hover:w-full" />
-      </Link>
-    </motion.li>
-  )
-}
-
-// ─────────────────────────────────────────────────────────────
-// SOCIAL LINK
-// ─────────────────────────────────────────────────────────────
-
-function SocialLink({ href, icon: Icon, label }: { href: string; icon: React.FC<React.SVGProps<SVGSVGElement>>; label: string }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={label}
-      className="group flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-white/[0.03] text-white/50 hover:text-white hover:border-white/25 hover:bg-white/[0.06] transition-all duration-300 hover:scale-105"
-    >
-      <Icon className="w-4 h-4" />
-    </a>
-  )
-}
-
-// ─────────────────────────────────────────────────────────────
-// CURSOR SPOTLIGHT
-// ─────────────────────────────────────────────────────────────
-
-function useCursorSpotlight(containerRef: React.RefObject<HTMLElement | null>) {
-  const [pos, setPos] = useState({ x: -1000, y: -1000 })
-  const prefersReducedMotion = useReducedMotion()
-
-  useEffect(() => {
-    if (prefersReducedMotion) return
-    const el = containerRef.current
-    if (!el) return
-
-    const handler = (e: MouseEvent) => {
-      const rect = el.getBoundingClientRect()
-      setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+    if (result.status === 'success') {
+      setState('success')
+      toast.success("You're on the list.", { description: `Confirmation sent to ${email}` })
+    } else {
+      setState('error')
+      toast.error(result.message || 'Something went wrong.')
+      setTimeout(() => setState('idle'), 2000)
     }
-    const leave = () => setPos({ x: -1000, y: -1000 })
+  }
 
-    el.addEventListener('mousemove', handler)
-    el.addEventListener('mouseleave', leave)
-    return () => {
-      el.removeEventListener('mousemove', handler)
-      el.removeEventListener('mouseleave', leave)
-    }
-  }, [containerRef, prefersReducedMotion])
-
-  return pos
-}
-
-// ─────────────────────────────────────────────────────────────
-// AMBIENT LIGHT SWEEP
-// ─────────────────────────────────────────────────────────────
-
-function AmbientSweep() {
-  const prefersReducedMotion = useReducedMotion()
-  if (prefersReducedMotion) return null
-
-  return (
-    <motion.div
-      className="absolute inset-0 pointer-events-none z-0"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: [0, 0.04, 0] }}
-      transition={{
-        repeat: Infinity,
-        duration: 8,
-        repeatDelay: 12 + Math.random() * 8,
-        ease: 'easeInOut',
-      }}
-      style={{
-        background: 'linear-gradient(135deg, transparent 30%, rgba(4,120,87,0.15) 50%, transparent 70%)',
-      }}
-    />
-  )
-}
-
-// ─────────────────────────────────────────────────────────────
-// GIANT WATERMARK
-// ─────────────────────────────────────────────────────────────
-
-function GiantWatermark() {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 1.5, delay: 0.5, ease: EASING.expensive }}
-      viewport={{ once: true }}
-      className="absolute bottom-0 left-0 right-0 pointer-events-none z-0 overflow-hidden select-none"
-      aria-hidden="true"
-    >
-      {/* The giant GLOWMINAL watermark, bottom-aligned, partially bleeding off-screen */}
-      <div
-        className="w-full text-center leading-[0.8]"
-        style={{
-          fontSize: 'clamp(120px, 16vw, 280px)',
-          fontFamily: "'Inter', 'Helvetica Neue', Arial, sans-serif",
-          fontWeight: 900,
-          letterSpacing: '-0.04em',
-          color: 'transparent',
-          WebkitTextStroke: '1px rgba(255,255,255,0.04)',
-          // Gradient mask: fade from visible at center to invisible at top and bottom
-          maskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.4) 70%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.4) 70%, transparent 100%)',
-          transform: 'translateY(18%)',
-        }}
-      >
-        GLOWMINAL
+  if (state === 'success') {
+    return (
+      <div className="flex items-center gap-3 h-12 px-5 rounded-full border border-white/20 bg-white/[0.03] text-white/70 text-sm">
+        <Check className="w-4 h-4 text-primary" />
+        <span>You're in. Check your inbox.</span>
       </div>
-    </motion.div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex items-stretch w-full max-w-[520px]">
+      {/* Honeypot */}
+      <input type="text" name="hp" id="footer-hp" className="hidden" tabIndex={-1} autoComplete="off" />
+
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="E-MAIL"
+        required
+        autoComplete="email"
+        autoCapitalize="none"
+        className="flex-1 h-12 bg-white/[0.04] border border-white/15 border-r-0 rounded-l-full px-6 text-sm text-white placeholder:text-white/30 font-mono tracking-wider focus:outline-none focus:border-white/30 focus:bg-white/[0.06] transition-all duration-300"
+      />
+      <button
+        type="submit"
+        disabled={state === 'loading'}
+        className="h-12 px-7 bg-white text-[#022C22] text-xs font-bold tracking-[0.15em] uppercase rounded-r-full border border-white hover:bg-white/90 active:scale-[0.98] transition-all duration-200 disabled:opacity-70 whitespace-nowrap"
+      >
+        {state === 'loading' ? '...' : 'GET UPDATES'}
+      </button>
+    </form>
   )
 }
 
@@ -228,7 +111,6 @@ export function LandingFooter() {
   const footerRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(footerRef, { margin: '-10% 0px 0px 0px' })
   const setNavTheme = useNavThemeStore(s => s.setTheme)
-  const cursorPos = useCursorSpotlight(footerRef)
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null)
 
   useEffect(() => {
@@ -245,195 +127,173 @@ export function LandingFooter() {
   return (
     <footer
       ref={footerRef}
-      className="relative bg-[#022C22] text-white overflow-hidden selection:bg-accent-lime/30 selection:text-white"
+      className="relative bg-[#022C22] text-white overflow-hidden"
       role="contentinfo"
     >
-      {/* ─── SECTION TRANSITION GRADIENT ─── */}
-      <div
-        className="absolute top-0 left-0 right-0 h-48 pointer-events-none z-10"
-        style={{
-          background: 'linear-gradient(to bottom, var(--color-primary-dark), transparent)',
-        }}
-      />
-
       {/* ─── ATMOSPHERIC BACKGROUND ─── */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        {/* Soft radial ambient light */}
-        <div className="absolute top-[-30%] left-[10%] w-[70vw] h-[70vw] rounded-full bg-[radial-gradient(circle,rgba(4,120,87,0.12)_0%,transparent_65%)]" />
-        <div className="absolute bottom-[-20%] right-[5%] w-[50vw] h-[50vw] rounded-full bg-[radial-gradient(circle,rgba(167,243,208,0.04)_0%,transparent_65%)]" />
-
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Warm emerald glow — top-left, mimicking the Daylight amber glow */}
+        <div className="absolute top-0 left-0 w-[70%] h-[70%] bg-[radial-gradient(ellipse_at_20%_20%,rgba(4,120,87,0.25)_0%,transparent_70%)]" />
+        {/* Secondary glow — softer, right side */}
+        <div className="absolute top-0 right-0 w-[50%] h-[60%] bg-[radial-gradient(ellipse_at_80%_30%,rgba(167,243,208,0.06)_0%,transparent_70%)]" />
         {/* Film grain */}
         <div
-          className="absolute inset-0 opacity-[0.025] mix-blend-screen"
+          className="absolute inset-0 opacity-[0.03] mix-blend-screen"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
           }}
         />
       </div>
 
-      {/* ─── CURSOR SPOTLIGHT ─── */}
-      <div
-        className="absolute pointer-events-none z-[1] transition-opacity duration-700"
-        style={{
-          left: cursorPos.x - 250,
-          top: cursorPos.y - 250,
-          width: 500,
-          height: 500,
-          background: 'radial-gradient(circle, rgba(4,120,87,0.06) 0%, transparent 70%)',
-          opacity: cursorPos.x > -500 ? 1 : 0,
-        }}
-      />
+      {/* ─── CONTENT ─── */}
+      <div className="relative z-10 w-full max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16">
 
-      {/* ─── AMBIENT SWEEP ─── */}
-      <AmbientSweep />
-
-      {/* ─── GIANT WATERMARK ─── */}
-      <GiantWatermark />
-
-      {/* ─── MAIN CONTENT ─── */}
-      <motion.div
-        className="relative z-10 w-full max-w-[1280px] mx-auto px-6 md:px-12 lg:px-16"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-50px' }}
-        variants={staggerContainer}
-      >
-        {/* ═══════════════════════════════════════════
-            UPPER SECTION — CTA
-            ═══════════════════════════════════════════ */}
-        <div className="pt-28 md:pt-40 pb-20 md:pb-28 flex flex-col items-center text-center">
-          {/* Subtle tagline */}
-          <motion.p
-            variants={fadeUp}
-            className="font-mono text-[10px] md:text-[11px] tracking-[0.3em] text-white/40 uppercase mb-10"
-          >
-            AI Skin Intelligence Platform
-          </motion.p>
-
-          {/* Waitlist — the centrepiece */}
-          <motion.div variants={fadeUp} className="w-full max-w-lg" id="waitlist">
-            <WaitlistForm theme="dark" />
-          </motion.div>
-        </div>
-
-        {/* ═══════════════════════════════════════════
-            MIDDLE SECTION — Three-Column Editorial Grid
-            ═══════════════════════════════════════════ */}
+        {/* ═══════════════════════════════════════
+            ROW 1 — Logo + Nav + Who We Are + Socials
+            ═══════════════════════════════════════ */}
         <motion.div
-          variants={fadeUp}
-          className="border-t border-white/[0.07] pt-16 pb-16 md:pb-20"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: EASING.expensive }}
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 pt-20 md:pt-28 pb-16 md:pb-20"
         >
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-14 md:gap-8">
+          {/* Logo + Company Name */}
+          <div className="md:col-span-4 flex items-start gap-4">
+            <GlowminalLogo variant="symbol" theme="light" size={44} />
+            <div className="flex flex-col">
+              <span className="text-[22px] md:text-[26px] font-bold tracking-tight leading-[1.15] uppercase">
+                GLOWMINAL
+              </span>
+              <span className="text-[11px] font-mono tracking-[0.15em] text-white/40 uppercase mt-0.5">
+                AI Skin Intelligence
+              </span>
+            </div>
+          </div>
 
-            {/* ── LEFT: Brand Identity ── */}
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="md:col-span-5 space-y-8"
-            >
-              {/* Logo + Brand Name */}
-              <motion.div variants={fadeUp} className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">G</span>
-                </div>
-                <span className="text-[15px] font-medium tracking-tight text-white/90">Glowminal</span>
-              </motion.div>
-
-              {/* Tagline */}
-              <motion.p variants={fadeUp} className="text-[22px] md:text-[26px] font-light leading-[1.3] text-white/80 max-w-sm tracking-tight">
-                Understand Your Skin.<br />
-                <span className="italic font-light text-white/50">Finally.</span>
-              </motion.p>
-
-              {/* Social Icons */}
-              <motion.div variants={fadeUp} className="flex items-center gap-3 pt-2">
-                {SOCIALS.map((s) => (
-                  <SocialLink key={s.name} href={s.href} icon={s.icon} label={s.name} />
-                ))}
-              </motion.div>
-
-              {/* Emails */}
-              <motion.div variants={fadeUp} className="space-y-2 pt-2">
-                {['hello@glowminal.tech', 'founders@glowminal.tech'].map((email) => (
-                  <button
-                    key={email}
-                    onClick={() => handleCopyEmail(email)}
-                    className="group flex items-center gap-2.5 text-sm text-white/50 hover:text-white/80 transition-colors duration-300"
+          {/* Navigation */}
+          <div className="md:col-span-2">
+            <h4 className="text-[10px] font-mono tracking-[0.2em] text-white/35 uppercase mb-5">
+              Navigation
+            </h4>
+            <ul className="space-y-3">
+              {[
+                { name: 'Home', href: '/' },
+                { name: 'Features', href: '/features' },
+                { name: 'Science', href: '/science' },
+                { name: 'About', href: '/about' },
+              ].map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-[15px] text-white/70 hover:text-white transition-colors duration-300"
                   >
-                    <span>{email}</span>
-                    {copiedEmail === email ? (
-                      <Check className="w-3.5 h-3.5 text-primary" />
-                    ) : (
-                      <Copy className="w-3 h-3 opacity-0 group-hover:opacity-60 transition-opacity duration-300" />
-                    )}
-                  </button>
-                ))}
-              </motion.div>
-            </motion.div>
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            {/* ── CENTRE: Spacer on desktop (maintains the reference's breathing room) ── */}
-            <div className="hidden md:block md:col-span-2" />
+          {/* Who We Are */}
+          <div className="md:col-span-3">
+            <h4 className="text-[10px] font-mono tracking-[0.2em] text-white/35 uppercase mb-5">
+              Who We Are
+            </h4>
+            <p className="text-[15px] text-white/60 leading-relaxed max-w-[240px]">
+              The future of explainable skin intelligence. Precision analysis for long-term health.
+            </p>
+          </div>
 
-            {/* ── RIGHT: Navigation ── */}
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="md:col-span-5"
-            >
-              <div className="grid grid-cols-2 gap-x-12 gap-y-10">
-                {/* Nav Column 1 */}
-                <div>
-                  <motion.h4
-                    variants={fadeUp}
-                    className="font-mono text-[10px] tracking-[0.2em] text-white/30 uppercase mb-6"
-                  >
-                    Platform
-                  </motion.h4>
-                  <ul className="space-y-4">
-                    {NAV_LEFT.map((l) => (
-                      <FooterNavLink key={l.name} href={l.href}>{l.name}</FooterNavLink>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Nav Column 2 */}
-                <div>
-                  <motion.h4
-                    variants={fadeUp}
-                    className="font-mono text-[10px] tracking-[0.2em] text-white/30 uppercase mb-6"
-                  >
-                    Company
-                  </motion.h4>
-                  <ul className="space-y-4">
-                    {NAV_RIGHT.map((l) => (
-                      <FooterNavLink key={l.name} href={l.href}>{l.name}</FooterNavLink>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </motion.div>
+          {/* Socials */}
+          <div className="md:col-span-3">
+            <h4 className="text-[10px] font-mono tracking-[0.2em] text-white/35 uppercase mb-5">
+              Socials
+            </h4>
+            <div className="flex items-center gap-4">
+              {[
+                { icon: XIcon, href: 'https://x.com/glowminal', label: 'X' },
+                { icon: LinkedinIcon, href: 'https://www.linkedin.com/company/glowminal.tech', label: 'LinkedIn' },
+                { icon: InstagramIcon, href: 'https://www.instagram.com/glowminal.tech/', label: 'Instagram' },
+                { icon: GithubIcon, href: 'https://github.com/glowminal', label: 'GitHub' },
+              ].map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="text-white/60 hover:text-white transition-colors duration-300"
+                >
+                  <s.icon className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
           </div>
         </motion.div>
 
-        {/* ═══════════════════════════════════════════
-            BOTTOM BAR
-            ═══════════════════════════════════════════ */}
+        {/* ═══════════════════════════════════════
+            ROW 2 — Copyright + Email Form
+            (separated by a thin border, exactly like reference)
+            ═══════════════════════════════════════ */}
         <motion.div
-          variants={fadeUp}
-          className="border-t border-white/[0.05] py-8 flex flex-col md:flex-row items-center justify-between gap-4"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1, ease: EASING.expensive }}
+          viewport={{ once: true }}
+          className="border-t border-white/[0.08] py-8 grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-8 items-center"
         >
-          <p className="font-mono text-[10px] tracking-[0.15em] text-white/25 uppercase">
-            © 2026 Glowminal. All Rights Reserved.
-          </p>
-          <p className="font-mono text-[10px] tracking-[0.15em] text-white/25 uppercase italic">
-            Understand Your Skin. Finally.
-          </p>
+          {/* Left — Copyright + Legal */}
+          <div className="md:col-span-5 flex flex-col gap-1.5">
+            <p className="text-[11px] font-mono tracking-[0.1em] text-white/30">
+              © MMXXVI • Glowminal • AI Skin Intelligence Platform
+            </p>
+            <div className="flex items-center gap-3">
+              <Link href="/privacy" className="text-[11px] font-mono tracking-[0.1em] text-white/30 hover:text-white/60 underline underline-offset-2 decoration-white/10 hover:decoration-white/30 transition-colors duration-300">
+                Privacy Policy
+              </Link>
+              <span className="text-white/15">•</span>
+              <Link href="/terms" className="text-[11px] font-mono tracking-[0.1em] text-white/30 hover:text-white/60 underline underline-offset-2 decoration-white/10 hover:decoration-white/30 transition-colors duration-300">
+                Terms of Service
+              </Link>
+            </div>
+          </div>
+
+          {/* Right — Email Form */}
+          <div className="md:col-span-7 flex flex-col md:flex-row md:items-center gap-3 md:justify-end">
+            <span className="text-[10px] font-mono tracking-[0.2em] text-white/35 uppercase shrink-0">
+              Get Updates
+            </span>
+            <FooterEmailForm />
+          </div>
         </motion.div>
-      </motion.div>
+
+        {/* ═══════════════════════════════════════
+            ROW 3 — Contact Emails (bonus — same copy feature)
+            ═══════════════════════════════════════ */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="border-t border-white/[0.05] py-6 flex flex-wrap items-center gap-6"
+        >
+          {['hello@glowminal.tech', 'founders@glowminal.tech'].map((email) => (
+            <button
+              key={email}
+              onClick={() => handleCopyEmail(email)}
+              className="group flex items-center gap-2 text-[12px] font-mono text-white/25 hover:text-white/50 transition-colors duration-300"
+            >
+              <span>{email}</span>
+              {copiedEmail === email ? (
+                <Check className="w-3 h-3 text-primary" />
+              ) : (
+                <Copy className="w-3 h-3 opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
+              )}
+            </button>
+          ))}
+        </motion.div>
+      </div>
     </footer>
   )
 }
